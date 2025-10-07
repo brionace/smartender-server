@@ -38,8 +38,8 @@ Format:
     {
       "name": "Recipe Name",
       "ingredients": [
-        { "name": "ingredient1", "measurement": "amount" },
-        { "name": "ingredient2", "measurement": "amount" }
+        { "name": "ingredient1", "amount": 1, "unit": "oz" },
+        { "name": "ingredient2", "amount": 2, "unit": "oz" }
       ],
       "instructions": ["Step 1", "Step 2", "Step 3"],
       "suggestedGlass": "Glass Type",
@@ -56,11 +56,11 @@ Example:
     {
       "name": "Classic Mojito",
       "ingredients": [
-        { "name": "white rum", "measurement": "2 oz" },
-        { "name": "fresh lime juice", "measurement": "1 oz" },
-        { "name": "mint leaves", "measurement": "8-10" },
-        { "name": "simple syrup", "measurement": "1 oz" },
-        { "name": "club soda", "measurement": "" }
+        { "name": "white rum", "amount": 2, "unit": "oz" },
+        { "name": "fresh lime juice", "amount": 1, "unit": "oz" },
+        { "name": "mint leaves", "amount": 8, "unit": "leaves" },
+        { "name": "simple syrup", "amount": 1, "unit": "oz" },
+        { "name": "club soda", "amount": 0, "unit": "oz" }
       ],
       "instructions": ["Muddle mint gently with lime juice and syrup", "Add rum and ice", "Top with club soda and garnish with mint sprig"],
       "suggestedGlass": "Highball",
@@ -87,7 +87,9 @@ Example:
 
 // export interface RecipeIngredient {
 //   name: string;
-//   measurement: string;
+//   amount?: number;
+//   unit?: string;
+//   measurement?: string;
 // }
 
 // export interface Recipe {
@@ -98,6 +100,12 @@ Example:
 //   garnish?: string;
 //   alcoholType?: string; // e.g. "Rum", "Vodka", etc.
 //   abv?: number; // Alcohol by volume, e.g. 12.5
+// }
+// export interface RecipeIngredient {
+//   name: string;
+//   amount?: number;
+//   unit?: string;
+//   measurement?: string; // fallback for legacy/freeform
 // }
 
 // export interface GenerateRecipesOutput {

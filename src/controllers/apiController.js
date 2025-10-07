@@ -1,5 +1,5 @@
 // Placeholder controller implementations
-import aiService from "../services/openai.js";
+import aiService from "../services/deepinfra.js";
 
 export async function identifyImage(req, res) {
   const result = await aiService.identifyIngredients(req.body);
