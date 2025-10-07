@@ -1,5 +1,5 @@
 import axios from "axios";
-import { INGREDIENTS_PROMPT, GENERATE_RECIPE_PROMPT } from "../utils.js";
+import { INGREDIENTS_PROMPT, GENERATE_RECIPE_PROMPT } from "./types.js";
 
 class AIService {
   constructor() {
