@@ -19,7 +19,11 @@ Example response:
 export const GENERATE_RECIPE_PROMPT = (input) => {
   return `You are a professional mixologist and culinary expert specializing in beverage recipes and food pairing.
 
-A user has identified these beverage ingredients from their collection: ${input.ingredients}
+A user has identified these beverage ingredients from their collection: ${
+    input.ingredients
+  }
+
+
 
 Please suggest up to 10 classic cocktail recipes and none-alcoholic beverage options that use these ingredients. For each recipe, provide:
 1. Name
@@ -29,8 +33,16 @@ Please suggest up to 10 classic cocktail recipes and none-alcoholic beverage opt
 5. Garnish as a separate string field (e.g., "Lime Wedge", "Mint Sprig", "Lemon Twist")
 6. Alcohol type as a string field (e.g., "Rum", "Vodka", "Whiskey", "Gin", "Tequila", "Brandy", "Cognac", "None-Alcoholic")
 7. Estimated ABV (alcohol by volume) as a number field (e.g., 12.5 for 12.5%)
+8. The drinkColour as a hex color string (e.g., "#A3C1AD") representing the typical color of the drink.
+9. ${
+    input.filters.measurementType === "metric"
+      ? "Use metric measurements (ml, grams, etc.) for all ingredient amounts."
+      : "Use imperial measurements (oz, tbsp, etc.) for all ingredient amounts."
+  }
+10. If a recipe is non-alcoholic, set the alcohol type to "Non-Alcoholic" and ABV to 0.
 
-IMPORTANT: Respond with ONLY valid JSON. No other text.
+IMPORTANT: Respond with ONLY valid JSON. No other text or formatting.
+Here is the exact JSON structure you must follow:
 
 Format:
 {
@@ -45,7 +57,8 @@ Format:
       "suggestedGlass": "Glass Type",
       "garnish": "Garnish Description",
       "alcoholType": "Rum",
-      "abv": 12.5
+      "abv": 12.5,
+      "drinkColour": "#A3C1AD"
     }
   ]
 }
@@ -66,10 +79,12 @@ Example:
       "suggestedGlass": "Highball",
       "garnish": "Mint Sprig",
       "alcoholType": "Rum",
-      "abv": 12.5
+      "abv": 12.5,
+      "drinkColour": "#B0E0A8"
     }
   ]
-}`;
+}
+`;
 };
 
 // export interface IdentifyIngredientsInput {
