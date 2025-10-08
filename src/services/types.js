@@ -25,7 +25,16 @@ A user has identified these beverage ingredients from their collection: ${
 
 
 
-Please suggest up to 10 classic cocktail recipes and none-alcoholic beverage options that use these ingredients. For each recipe, provide:
+Please suggest up to 10 classic cocktail recipes and none-alcoholic beverage options that use these ingredients. 
+
+${
+  input.filters.combineOnly &&
+  `
+IMPORTANT: You must generate recipes that are made only by combining ingredients from the provided collection list (you can include missing ingredients and garnish).
+`
+}
+
+For each recipe, provide:
 1. Name
 2. Complete ingredient list as an array of objects, each with "name" and "measurement" fields. Example: [{ "name": "Vodka", "measurement": "2 oz" }, { "name": "Lime Juice", "measurement": "0.75 oz" }, { "name": "Mint Leaves", "measurement": "8 leaves" }]
 3. Preparation instructions as a numbered array of steps (e.g., ["Add ice to glass", "Pour vodka", "Stir gently"])
@@ -56,7 +65,7 @@ Format:
       "instructions": ["Step 1", "Step 2", "Step 3"],
       "suggestedGlass": "Glass Type",
       "garnish": "Garnish Description",
-      "alcoholType": "Rum",
+      "alcoholType": "Alcohol Type",
       "abv": 12.5,
       "drinkColour": "#A3C1AD"
     }
