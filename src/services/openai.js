@@ -140,9 +140,7 @@ class AIServiceOpenAI {
 
   async generateRecipes(input) {
     // Use the custom prompt if provided, otherwise use the default
-    const prompt = input.prompt
-      ? input.prompt
-      : GENERATE_RECIPE_PROMPT({ ingredients: input.ingredients });
+    const prompt = GENERATE_RECIPE_PROMPT({ ingredients: input.ingredients, filters: input.filters });
 
     try {
       const result = await this.callOpenAIAPI(prompt);
