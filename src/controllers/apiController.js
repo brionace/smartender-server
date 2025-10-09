@@ -1,4 +1,3 @@
-// Placeholder controller implementations
 import aiService from "../services/deepinfra.js";
 
 export async function identifyImage(req, res) {

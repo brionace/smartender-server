@@ -1,5 +1,6 @@
 import axios from "axios";
-import { INGREDIENTS_PROMPT, GENERATE_RECIPE_PROMPT } from "./types.js";
+import { INGREDIENTS_PROMPT, GENERATE_RECIPE_PROMPT } from "./utils/prompts.js";
+import { validateRecipesResponse } from "./utils/validateRecipe.js";
 
 class AIService {
   constructor() {
@@ -175,34 +176,8 @@ class AIService {
         throw new Error("Invalid response format from AI service");
       }
 
-      // Validate each recipe and ensure alcoholType and abv are present
-      for (const recipe of result.recipes) {
-        if (
-          !recipe.name ||
-          !Array.isArray(recipe.ingredients) ||
-          !Array.isArray(recipe.instructions) ||
-          !recipe.suggestedGlass
-        ) {
-          throw new Error("Invalid recipe format in AI response");
-        }
-        // Validate each ingredient object
-        for (const ing of recipe.ingredients) {
-          if (
-            typeof ing !== "object" ||
-            typeof ing.name !== "string" ||
-            typeof ing.measurement !== "string"
-          ) {
-            throw new Error("Invalid ingredient format in AI response");
-          }
-        }
-        // Validate garnish (optional)
-        if (recipe.garnish && typeof recipe.garnish !== "string") {
-          throw new Error("Invalid garnish format in AI response");
-        }
-        // Ensure alcoholType and abv fields exist (optional, fallback to null if missing)
-        if (!("alcoholType" in recipe)) recipe.alcoholType = null;
-        if (!("abv" in recipe)) recipe.abv = null;
-      }
+      // Validate recipes using shared utility
+      validateRecipesResponse(result);
 
       return result;
     } catch (error) {
