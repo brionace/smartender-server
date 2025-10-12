@@ -24,8 +24,12 @@ A user has identified these beverage ingredients from their collection: ${
   }
 
 
-
-Please suggest up to 10 classic cocktail recipes and none-alcoholic beverage options that use these ingredients. For each recipe, provide:
+${
+  input.filters.isAlcoholic === false
+    ? "Please suggest up to 10 non-alcoholic beverage recipes. Do not include any alcoholic drinks.\n"
+    : "Please suggest up to 10 classic cocktail recipes that use these ingredients.\n"
+}
+For each recipe, provide:
 1. Name
 2. Complete ingredient list as an array of objects, each with "name" and "measurement" fields. Example: [{ "name": "Vodka", "measurement": "2 oz" }, { "name": "Lime Juice", "measurement": "0.75 oz" }, { "name": "Mint Leaves", "measurement": "8 leaves" }]
 3. Preparation instructions as a numbered array of steps (e.g., ["Add ice to glass", "Pour vodka", "Stir gently"])
@@ -35,17 +39,14 @@ Please suggest up to 10 classic cocktail recipes and none-alcoholic beverage opt
 7. Estimated ABV (alcohol by volume) as a number field (e.g., 12.5 for 12.5%)
 8. The drinkColour as a hex color string (e.g., "#A3C1AD") representing the typical color of the drink.
 9. If a recipe is non-alcoholic, set the alcohol type to "Non-Alcoholic" and ABV to 0.
-${
-  input.filters.combineOnly &&
-  `
-\n\nIMPORTANT: You must generate recipes that are made only by combining ingredients from the provided collection list (you can include missing ingredients and garnish).\n\n
-`
-}
+
 ${
   input.filters.measurementType === "metric"
     ? "\n\nIMPORTANT: Use metric measurements (ml, grams, etc.) for all ingredient amounts.\n\n"
     : "\n\nIMPORTANT: Use imperial measurements (oz, tbsp, etc.) for all ingredient amounts.\n\n"
 }
+
+IMPORTANT: You must order the recipes so that those which can be made using only the provided ingredients (no missing ingredients except garnish) appear first in the list, followed by recipes that require missing ingredients.\n\n
 IMPORTANT: Respond with ONLY valid JSON. No other text or formatting.
 Here is the exact JSON structure you must follow:
 
