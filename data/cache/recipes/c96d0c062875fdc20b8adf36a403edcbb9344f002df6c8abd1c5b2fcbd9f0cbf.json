@@ -1,0 +1,52 @@
+{
+  "meta": {
+    "createdAt": "2025-10-25T22:31:03.230Z",
+    "version": 1
+  },
+  "data": {
+    "body": {
+      "ingredients": [
+        "Red bull",
+        "rum"
+      ],
+      "filters": {
+        "isAlcoholic": true,
+        "abv": "",
+        "measurementType": "metric"
+      },
+      "recipes": [
+        {
+          "name": "Rum Red Bull",
+          "ingredients": [
+            {
+              "name": "Rum",
+              "amount": 30,
+              "unit": "ml"
+            },
+            {
+              "name": "Red Bull",
+              "amount": 120,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice",
+            "Pour the rum over the ice",
+            "Top with Red Bull",
+            "Stir gently"
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lime wedge",
+          "alcoholType": "Rum",
+          "drinkColour": "#FF0000",
+          "abv": 0.3,
+          "missingIngredients": [],
+          "confidence": 1
+        }
+      ]
+    },
+    "result": {
+      "recipes": []
+    }
+  }
+}

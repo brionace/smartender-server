@@ -1,0 +1,217 @@
+{
+  "meta": {
+    "createdAt": "2025-10-25T22:05:35.232Z",
+    "version": 1
+  },
+  "data": {
+    "body": {
+      "ingredients": [
+        "Vodka",
+        "Coke",
+        "whiskey",
+        "rum",
+        "Rum"
+      ],
+      "filters": {
+        "isAlcoholic": true,
+        "abv": "",
+        "measurementType": "metric"
+      },
+      "recipes": [
+        {
+          "name": "Vodka Spritz",
+          "ingredients": [
+            {
+              "name": "Vodka",
+              "amount": 30,
+              "unit": "ml"
+            },
+            {
+              "name": "Prosecco",
+              "amount": 90,
+              "unit": "ml"
+            },
+            {
+              "name": "Lemon-lime soda",
+              "amount": 30,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a wine glass with ice.",
+            "Pour in the vodka and Prosecco.",
+            "Top with lemon-lime soda.",
+            "Stir gently."
+          ],
+          "suggestedGlass": "Wine Glass",
+          "garnish": "Lemon slice",
+          "alcoholType": "Cocktail",
+          "drinkColour": "#FFFFFF",
+          "abv": 5.5,
+          "missingIngredients": [
+            "Prosecco",
+            "Lemon-lime soda"
+          ],
+          "confidence": 0.5
+        },
+        {
+          "name": "Vodka Coke",
+          "ingredients": [
+            {
+              "name": "Vodka",
+              "amount": 50,
+              "unit": "ml"
+            },
+            {
+              "name": "Coke",
+              "amount": 100,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice.",
+            "Add vodka.",
+            "Top with Coke.",
+            "Stir gently."
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lime wedge",
+          "alcoholType": "Vodka",
+          "drinkColour": "#000000",
+          "abv": 0.4,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Rum and Coke",
+          "ingredients": [
+            {
+              "name": "Rum",
+              "amount": 50,
+              "unit": "ml"
+            },
+            {
+              "name": "Coke",
+              "amount": 100,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice.",
+            "Add rum.",
+            "Top with Coke.",
+            "Stir gently."
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lime wedge",
+          "alcoholType": "Rum",
+          "drinkColour": "#000000",
+          "abv": 0.4,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Whiskey Coke",
+          "ingredients": [
+            {
+              "name": "Whiskey",
+              "amount": 50,
+              "unit": "ml"
+            },
+            {
+              "name": "Coke",
+              "amount": 100,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice.",
+            "Add whiskey.",
+            "Top with Coke.",
+            "Stir gently."
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Orange twist",
+          "alcoholType": "Whiskey",
+          "drinkColour": "#000000",
+          "abv": 0.35,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Whiskey and Coke",
+          "ingredients": [
+            {
+              "name": "Whiskey",
+              "amount": 30,
+              "unit": "ml"
+            },
+            {
+              "name": "Coke",
+              "amount": 150,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice",
+            "Pour in the whiskey",
+            "Top with Coke",
+            "Stir gently"
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lemon twist",
+          "alcoholType": "Whiskey",
+          "drinkColour": "#000000",
+          "abv": 0.405,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Rum on the Rocks",
+          "ingredients": [
+            {
+              "name": "Rum",
+              "amount": 30,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a rocks glass with ice",
+            "Pour in the rum"
+          ],
+          "suggestedGlass": "Rocks",
+          "garnish": "None",
+          "alcoholType": "Rum",
+          "drinkColour": "#FFFFFF",
+          "abv": 0.4,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Vodka on the Rocks",
+          "ingredients": [
+            {
+              "name": "Vodka",
+              "amount": 30,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a rocks glass with ice",
+            "Pour in the vodka"
+          ],
+          "suggestedGlass": "Rocks",
+          "garnish": "None",
+          "alcoholType": "Vodka",
+          "drinkColour": "#FFFFFF",
+          "abv": 0.4,
+          "missingIngredients": [],
+          "confidence": 1
+        }
+      ]
+    },
+    "result": {
+      "recipes": []
+    }
+  }
+}
