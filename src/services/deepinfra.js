@@ -1,5 +1,9 @@
 import axios from "axios";
-import { INGREDIENTS_PROMPT, GENERATE_RECIPE_PROMPT } from "./utils/prompts.js";
+import {
+  INGREDIENTS_PROMPT,
+  GENERATE_RECIPE_PROMPT,
+  GENERATE_RECIPE_PROMPT_SIMPLE,
+} from "./utils/prompts.js";
 import { validateRecipesResponse } from "./utils/validateRecipe.js";
 
 class AIServiceOpenAI {
@@ -45,21 +49,22 @@ class AIServiceOpenAI {
       });
     }
 
+    // Use deterministic, faster settings
     try {
       const response = await axios.post(
         this.baseUrl,
         {
           model: this.model,
           messages,
-          max_tokens: 2048,
-          temperature: 0.7,
+          max_tokens: 1024,
+          temperature: 0.0,
         },
         {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${this.apiKey}`,
           },
-          timeout: 30000,
+          timeout: 60000,
         }
       );
 
@@ -99,6 +104,7 @@ class AIServiceOpenAI {
         );
       }
     } catch (error) {
+      console.log({ error });
       if (error.response) {
         if (error.response.status === 400) {
           throw new Error(
@@ -122,7 +128,10 @@ class AIServiceOpenAI {
   }
 
   async identifyIngredients(input) {
-    const prompt = INGREDIENTS_PROMPT;
+    // const prompt = INGREDIENTS_PROMPT;
+    const prompt = INGREDIENTS_PROMPT({
+      currentIngredients: input.ingredients,
+    });
 
     try {
       const result = await this.callOpenAIAPI(prompt, input.photoDataUri);
@@ -140,7 +149,7 @@ class AIServiceOpenAI {
 
   async generateRecipes(input) {
     // Use the custom prompt if provided, otherwise use the default
-    const prompt = GENERATE_RECIPE_PROMPT({
+    const prompt = GENERATE_RECIPE_PROMPT_SIMPLE({
       ingredients: input.ingredients,
       filters: input.filters,
     });
@@ -152,8 +161,20 @@ class AIServiceOpenAI {
         throw new Error("Invalid response format from AI service");
       }
 
-      // Validate recipes using shared utility
-      validateRecipesResponse(result);
+      // Normalize provided ingredients into an array of strings
+      const providedIngredients = Array.isArray(input.ingredients)
+        ? input.ingredients
+        : String(input.ingredients || "")
+            .split(",")
+            .map((s) => s.trim())
+            .filter(Boolean);
+
+      // Validate recipes using shared utility and enforce combineOnly if requested
+      validateRecipesResponse(result, {
+        providedIngredients,
+        combineOnly: !!input?.filters?.combineOnly,
+        existingRecipes: input?.recipes || [],
+      });
 
       return result;
     } catch (error) {

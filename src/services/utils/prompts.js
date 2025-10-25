@@ -1,94 +1,168 @@
-export const INGREDIENTS_PROMPT = `You are an expert at identifying cocktail ingredients from images.
+// export const INGREDIENTS_PROMPT = `You are an expert at identifying cocktail ingredients from images.
 
-A user has provided you with a photo. Your task is to identify all the potential cocktail ingredients in the image. 
-Focus on identifying liquors, mixers, fruits, and other items commonly used in cocktails.
-If you see a bottle, identify the type of liquor or liqueur. If you see fruit, identify it.
+// A user has provided you with a photo. Your task is to identify all the potential cocktail ingredients in the image.
+// Focus on identifying liquors, mixers, fruits, and other items commonly used in cocktails.
+// If you see a bottle, identify the type of liquor or liqueur. If you see fruit, identify it.
 
-IMPORTANT: You must respond with ONLY valid JSON. Do not include any other text or formatting.
+// IMPORTANT: You must respond with ONLY valid JSON. Do not include any other text or formatting.
 
-Return a list of the identified ingredients in this exact JSON format:
+// Return a list of the identified ingredients in this exact JSON format:
+// {
+//   "ingredients": ["ingredient1", "ingredient2", "ingredient3"]
+// }
+// Example response (strict JSON):
+// {
+//   "ingredients": ["vodka", "lime", "mint", "simple syrup"],
+//   "guesses": [],
+//   "uncertain": false
+// }`;
+// ...existing code...
+export const INGREDIENTS_PROMPT = (input) => {
+  const existing = Array.isArray(input?.currentIngredients)
+    ? input.currentIngredients
+    : String(input?.currentIngredients || "")
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean);
+
+  return `You are an expert at identifying cocktail ingredients from images.
+
+A user has provided you with a photo and the user's current ingredient list: ${JSON.stringify(
+    existing
+  )}
+
+Task:
+- Identify ingredients visible in the photo.
+- Do NOT repeat any ingredient already present in the user's current ingredient list above.
+- If an item in the photo matches an item in the current list, include it under "duplicates".
+- If unsure about an item, include it under "guesses" and set "uncertain": true.
+
+IMPORTANT: Respond with ONLY valid JSON and nothing else.
+
+Return this exact JSON structure:
 {
-  "ingredients": ["ingredient1", "ingredient2", "ingredient3"]
-}
-
-Example response:
-{
-  "ingredients": ["vodka", "lime", "mint", "simple syrup"]
-}`;
-
-export const GENERATE_RECIPE_PROMPT = (input) => {
-  return `You are a professional mixologist and culinary expert specializing in beverage recipes and food pairing.
-
-A user has identified these beverage ingredients from their collection: ${
-    input.ingredients
-  }
-
-
-${
-  input.filters.isAlcoholic === false
-    ? "Please suggest up to 10 non-alcoholic beverage recipes. Do not include any alcoholic drinks.\n"
-    : "Please suggest up to 10 classic cocktail recipes that use these ingredients.\n"
-}
-For each recipe, provide:
-1. Name
-2. Complete ingredient list as an array of objects, each with "name" and "measurement" fields. Example: [{ "name": "Vodka", "measurement": "2 oz" }, { "name": "Lime Juice", "measurement": "0.75 oz" }, { "name": "Mint Leaves", "measurement": "8 leaves" }]
-3. Preparation instructions as a numbered array of steps (e.g., ["Add ice to glass", "Pour vodka", "Stir gently"])
-4. Suggested glass type for serving (e.g., "Highball", "Martini", "Old Fashioned")
-5. Garnish as a separate string field (e.g., "Lime Wedge", "Mint Sprig", "Lemon Twist")
-6. Alcohol type as a string field (e.g., "Rum", "Vodka", "Whiskey", "Gin", "Tequila", "Brandy", "Cognac", "None-Alcoholic")
-7. Estimated ABV (alcohol by volume) as a number field (e.g., 12.5 for 12.5%)
-8. The drinkColour as a hex color string (e.g., "#A3C1AD") representing the typical color of the drink.
-9. If a recipe is non-alcoholic, set the alcohol type to "Non-Alcoholic" and ABV to 0.
-
-${
-  input.filters.measurementType === "metric"
-    ? "\n\nIMPORTANT: Use metric measurements (ml, grams, etc.) for all ingredient amounts.\n\n"
-    : "\n\nIMPORTANT: Use imperial measurements (oz, tbsp, etc.) for all ingredient amounts.\n\n"
-}
-
-IMPORTANT: You must order the recipes so that those which can be made using only the provided ingredients (no missing ingredients except garnish) appear first in the list, followed by recipes that require missing ingredients.\n\n
-IMPORTANT: Respond with ONLY valid JSON. No other text or formatting.
-Here is the exact JSON structure you must follow:
-
-Format:
-{
-  "recipes": [
-    {
-      "name": "Recipe Name",
-      "ingredients": [
-        { "name": "ingredient1", "amount": 1, "unit": "oz" },
-        { "name": "ingredient2", "amount": 2, "unit": "oz" }
-      ],
-      "instructions": ["Step 1", "Step 2", "Step 3"],
-      "suggestedGlass": "Glass Type",
-      "garnish": "Garnish Description",
-      "alcoholType": "Alcohol Type",
-      "drinkColour": "#A3C1AD",
-      "abv": 12.5
-    }
-  ]
+  "newIngredients": ["ingredientA", "ingredientB"],   // items detected AND NOT in the current list
+  "duplicates": ["ingredientX"],                      // items seen in the photo that are already in current list
+  "guesses": ["possible1"],                           // optional when uncertain
+  "uncertain": false                                  // or true when there are guesses
 }
 
 Example:
 {
+  "newIngredients": ["vodka", "mint"],
+  "duplicates": ["lime"],
+  "guesses": [],
+  "uncertain": false
+}`;
+};
+
+export const GENERATE_RECIPE_PROMPT = (input) => {
+  const isAlcoholic = input?.filters?.isAlcoholic !== false;
+  const measurementType =
+    input?.filters?.measurementType === "metric" ? "metric" : "imperial";
+  const ingredientsList = Array.isArray(input?.ingredients)
+    ? input.ingredients
+    : String(input?.ingredients || "")
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean);
+  const maxRecipes = ingredientsList.length <= 2 ? 1 : 5;
+
+  return `You are a professional mixologist. Given these available ingredients: ${
+    input.ingredients
+  }
+
+Return up to ${maxRecipes} ${
+    isAlcoholic ? "cocktail" : "non-alcoholic"
+  } recipes.
+
+Rules (strict):
+- Do NOT invent ingredients or amounts. Use only the provided ingredients unless you list missing items explicitly.
+- Do NOT invent ingredients or amounts. Use only the provided ingredients unless you list missing items explicitly.
+- For each recipe include a field "missingIngredients": an array of any ingredient names required but NOT in the provided list (empty array if none).
+- Order recipes so those with empty "missingIngredients" come first.
+- Exclude any recipes that appear on this list ${JSON.stringify(
+    input?.recipes || []
+  )}. Match by the recipe object's "name" property.
+- Use ${measurementType} units.
+- Prefer concise recipes (max ${maxRecipes}).
+
+For each recipe provide these exact fields:
+- name
+- ingredients: array of { name, amount (number), unit }
+- instructions: array of short steps
+- suggestedGlass
+- garnish
+- alcoholType
+- drinkColour (hex)
+- abv (number)
+- missingIngredients: array of strings
+- confidence: number between 0 and 1
+
+If you cannot produce any recipes without inventing items, return an empty "recipes" array and include a top-level "explanation" string describing why.
+
+IMPORTANT: Respond with ONLY valid JSON in this exact schema and nothing else. Example schema:
+{
   "recipes": [
     {
-      "name": "Classic Mojito",
-      "ingredients": [
-        { "name": "white rum", "amount": 2, "unit": "oz" },
-        { "name": "fresh lime juice", "amount": 1, "unit": "oz" },
-        { "name": "mint leaves", "amount": 8, "unit": "leaves" },
-        { "name": "simple syrup", "amount": 1, "unit": "oz" },
-        { "name": "club soda", "amount": 0, "unit": "oz" }
-      ],
-      "instructions": ["Muddle mint gently with lime juice and syrup", "Add rum and ice", "Top with club soda and garnish with mint sprig"],
-      "suggestedGlass": "Highball",
-      "garnish": "Mint Sprig",
-      "alcoholType": "Rum",
-      "drinkColour": "#B0E0A8",
-      "abv": 12.5
+      "name": "Recipe Name",
+      "ingredients": [ { "name": "ingredient1", "amount": 1, "unit": "oz" } ],
+      "instructions": ["Step 1"],
+      "suggestedGlass": "Glass Type",
+      "garnish": "Garnish",
+      "alcoholType": "Alcohol Type",
+      "drinkColour": "#A3C1AD",
+      "abv": 12.5,
+      "missingIngredients": [],
+      "confidence": 0.9
     }
-  ]
+  ],
+  "explanation": "optional when recipes is empty"
 }
+`;
+};
+
+export const GENERATE_RECIPE_PROMPT_SIMPLE = (input) => {
+  const cocktail =
+    input?.filters?.isAlcoholic === false ? "non-alcoholic" : "cocktail";
+  const measurementType =
+    input?.filters?.measurementType === "metric" ? "metric" : "imperial";
+  const ingredientsList = Array.isArray(input?.ingredients)
+    ? input.ingredients
+    : String(input?.ingredients || "")
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean);
+  const maxRecipes = ingredientsList.length <= 2 ? 1 : 5;
+
+  return `You are a professional mixologist. Given these available ingredients: ${
+    input.ingredients
+  }
+
+Return up to ${maxRecipes} ${cocktail} recipes.
+
+Rules (strict):
+- Do NOT invent ingredients or amounts. If a recipe requires items not in the provided list, list them in "missingIngredients".
+- Order recipes so those with empty "missingIngredients" come first.
+- Use ${measurementType} units.
+- Exclude any recipes that appear on this list ${JSON.stringify(
+    input?.recipes || []
+  )}. Match by the recipe object's "name" property.
+
+For each recipe include these exact fields:
+- name
+- ingredients: array of { name, amount (number), unit }
+- instructions: array of short steps
+- suggestedGlass
+- garnish
+- alcoholType
+- drinkColour (hex)
+- abv (number)
+- missingIngredients: array of strings
+- confidence: number between 0 and 1
+
+If no valid recipes can be produced without inventing items, return { "recipes": [], "explanation": "..." }.
+
+IMPORTANT: Respond with ONLY valid JSON in this exact schema and nothing else.
 `;
 };

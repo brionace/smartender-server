@@ -40,10 +40,10 @@ class AIService {
           },
         ],
         generationConfig: {
-          temperature: 0.7,
+          temperature: 0.0,
           topK: 40,
           topP: 0.95,
-          maxOutputTokens: 2048,
+          maxOutputTokens: 1024,
         },
         safetySettings: [
           {
@@ -109,7 +109,8 @@ class AIService {
       if (jsonMatch) {
         try {
           const jsonStr = jsonMatch[1] || jsonMatch[0];
-          return JSON.parse(jsonStr);
+          const parsed = JSON.parse(jsonStr);
+          return parsed;
         } catch (parseError) {
           throw new Error("Failed to parse JSON response");
         }
@@ -117,7 +118,8 @@ class AIService {
 
       // If no JSON found, try to parse the entire response
       try {
-        return JSON.parse(text);
+        const parsed = JSON.parse(text);
+        return parsed;
       } catch (parseError) {
         throw new Error("Response is not valid JSON");
       }
@@ -145,7 +147,9 @@ class AIService {
   }
 
   async identifyIngredients(input) {
-    const prompt = INGREDIENTS_PROMPT;
+    const prompt = INGREDIENTS_PROMPT({
+      currentIngredients: input.ingredients,
+    });
 
     try {
       const result = await this.callGeminiAPI(prompt, input.photoDataUri);
@@ -164,21 +168,31 @@ class AIService {
 
   async generateRecipes(input) {
     // Use the custom prompt if provided, otherwise use the default
-    const prompt = GENERATE_RECIPE_PROMPT({
-      ingredients: input.ingredients,
-      filters: input.filters,
-    });
+    // const prompt = GENERATE_RECIPE_PROMPT({
+    //   ingredients: input.ingredients,
+    //   filters: input.filters,
+    // });
 
     try {
-      const result = await this.callGeminiAPI(prompt);
+      const result = await this.callGeminiAPI(input.prompt);
 
       // Validate the response structure
       if (!result || !Array.isArray(result.recipes)) {
         throw new Error("Invalid response format from AI service");
       }
 
-      // Validate recipes using shared utility
-      validateRecipesResponse(result);
+      const providedIngredients = Array.isArray(input.ingredients)
+        ? input.ingredients
+        : String(input.ingredients || "")
+            .split(",")
+            .map((s) => s.trim())
+            .filter(Boolean);
+
+      validateRecipesResponse(result, {
+        providedIngredients,
+        combineOnly: !!input?.filters?.combineOnly,
+        existingRecipes: input?.recipes || [],
+      });
 
       return result;
     } catch (error) {
