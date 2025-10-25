@@ -12,4 +12,10 @@ router.post("/identify", identifyImage);
 // POST /get-recipes: Accepts ingredient list
 router.post("/recipes", getRecipes);
 
+// GET /recipes/browse: Return cached recipes for browsing (DB first, file fallback)
+router.get(
+  "/recipes/browse",
+  getRecipes.browse || require("../controllers/apiController").browseRecipes
+);
+
 module.exports = router;
