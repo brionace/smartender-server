@@ -1,4 +1,6 @@
 import crypto from "crypto";
+import fs from "fs/promises";
+import path from "path";
 import { getPool, query } from "./client.js";
 
 let ensurePromise = null;
@@ -53,39 +55,125 @@ async function ensureTable() {
   return ensurePromise;
 }
 
+// File-system fallback cache directory
+const ROOT = path.resolve(process.cwd());
+const FILE_CACHE_DIR = path.join(ROOT, "data", "cache");
+
+async function ensureFileDir(namespace) {
+  const dir = path.join(FILE_CACHE_DIR, namespace);
+  await fs.mkdir(dir, { recursive: true });
+  return dir;
+}
+
+function filePathFor(namespace, key) {
+  return path.join(FILE_CACHE_DIR, namespace, `${key}.json`);
+}
+
+async function readFileCache(namespace, key, ttlMs) {
+  try {
+    const file = filePathFor(namespace, key);
+    const raw = await fs.readFile(file, "utf8");
+    const parsed = JSON.parse(raw);
+    if (ttlMs && parsed?.meta?.createdAt) {
+      const age = Date.now() - new Date(parsed.meta.createdAt).getTime();
+      if (age > ttlMs) return null;
+    }
+    return parsed.data ?? null;
+  } catch (e) {
+    return null;
+  }
+}
+
+async function writeFileCache(namespace, key, body, result) {
+  try {
+    const dir = await ensureFileDir(namespace);
+    const file = path.join(dir, `${key}.json`);
+    const payload = {
+      meta: { createdAt: new Date().toISOString(), version: 1 },
+      data: { body, result },
+    };
+    await fs.writeFile(file, JSON.stringify(payload, null, 2), "utf8");
+  } catch (e) {
+    console.warn("File cache write failed:", e?.message || e);
+  }
+}
+
 export async function getCached(endpoint, body, ttlMs) {
   const pool = getPool();
   if (!pool) return null;
-  await ensureTable();
-  const bodyHash = hashKey(endpoint, body);
-  const { rows } = await query(
-    "SELECT result, created_at FROM ai_cache WHERE endpoint=$1 AND body_hash=$2 LIMIT 1",
-    [endpoint, bodyHash]
-  );
-  if (!rows.length) return null;
-  if (ttlMs) {
-    const age = Date.now() - new Date(rows[0].created_at).getTime();
-    if (age > ttlMs) return null;
+  try {
+    await ensureTable();
+    const bodyHash = hashKey(endpoint, body);
+    const { rows } = await query(
+      "SELECT result, created_at FROM ai_cache WHERE endpoint=$1 AND body_hash=$2 LIMIT 1",
+      [endpoint, bodyHash]
+    );
+    if (!rows || rows.length === 0) return null;
+    if (ttlMs) {
+      const age = Date.now() - new Date(rows[0].created_at).getTime();
+      if (age > ttlMs) return null;
+    }
+    // update access stats but ignore errors
+    try {
+      await query(
+        "UPDATE ai_cache SET hits=hits+1, last_accessed=NOW() WHERE endpoint=$1 AND body_hash=$2",
+        [endpoint, bodyHash]
+      );
+    } catch (e) {
+      console.warn("Failed to update cache stats:", e?.message || e);
+    }
+    return rows[0].result;
+  } catch (err) {
+    // Non-fatal: log and continue without cache
+    console.warn(
+      "Cache read failed (falling back to live AI):",
+      err?.code || err?.message || err
+    );
+    // Try file fallback
+    try {
+      const bodyHash = hashKey(endpoint, body);
+      const fileResult = await readFileCache(endpoint, bodyHash, ttlMs);
+      if (fileResult) return fileResult.result ?? fileResult;
+    } catch (e) {
+      // ignore
+    }
+    return null;
   }
-  await query(
-    "UPDATE ai_cache SET hits=hits+1, last_accessed=NOW() WHERE endpoint=$1 AND body_hash=$2",
-    [endpoint, bodyHash]
-  );
-  return rows[0].result;
 }
 
 export async function setCached(endpoint, body, result) {
   const pool = getPool();
   if (!pool) return;
-  await ensureTable();
-  const bodyHash = hashKey(endpoint, body);
-  await query(
-    `INSERT INTO ai_cache (endpoint, body_hash, body, result, hits)
-     VALUES ($1,$2,$3,$4,1)
-     ON CONFLICT (endpoint, body_hash)
-     DO UPDATE SET result=EXCLUDED.result, body=EXCLUDED.body, hits=ai_cache.hits+1, last_accessed=NOW()`,
-    [endpoint, bodyHash, body, result]
-  );
+  try {
+    await ensureTable();
+    const bodyHash = hashKey(endpoint, body);
+    await query(
+      `INSERT INTO ai_cache (endpoint, body_hash, body, result, hits)
+       VALUES ($1,$2,$3,$4,1)
+       ON CONFLICT (endpoint, body_hash)
+       DO UPDATE SET result=EXCLUDED.result, body=EXCLUDED.body, hits=ai_cache.hits+1, last_accessed=NOW()`,
+      [endpoint, bodyHash, body, result]
+    );
+    // also ensure file fallback is updated
+    try {
+      await writeFileCache(endpoint, bodyHash, body, result);
+    } catch (e) {
+      // ignore
+    }
+  } catch (err) {
+    // Non-fatal: log and continue
+    console.warn(
+      "Cache write failed (ignored):",
+      err?.code || err?.message || err
+    );
+    // fallback: write to file cache so we still persist locally
+    try {
+      const bodyHash = hashKey(endpoint, body);
+      await writeFileCache(endpoint, bodyHash, body, result);
+    } catch (e) {
+      // ignore
+    }
+  }
 }
 
 export default { getCached, setCached };

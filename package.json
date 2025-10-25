@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "test": "node --experimental-modules test/run-tests.mjs"
+    "test": "node --experimental-modules test/run-tests.js",
+    "test:db": "node --experimental-modules test/db-connection.js"
   },
   "dependencies": {
     "axios": "^1.12.2",

@@ -17,7 +17,6 @@ import { getPool } from "../src/db/client.js";
     await pool.end();
     process.exit(0);
   } catch (err) {
-    console.log({ err });
     console.error("DB connection failed:", err.message || err);
     process.exit(2);
   }
