@@ -1,0 +1,51 @@
+{
+  "meta": {
+    "createdAt": "2025-10-25T23:47:51.891Z",
+    "version": 1
+  },
+  "data": {
+    "body": {
+      "ingredients": [
+        "Red bull",
+        "southern comfort"
+      ],
+      "filters": {
+        "isAlcoholic": true,
+        "abv": "",
+        "measurementType": "metric"
+      },
+      "recipes": []
+    },
+    "result": {
+      "recipes": [
+        {
+          "name": "Southern Comfort Red Bull",
+          "ingredients": [
+            {
+              "name": "Southern Comfort",
+              "amount": 30,
+              "unit": "ml"
+            },
+            {
+              "name": "Red Bull",
+              "amount": 120,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Pour Southern Comfort into a glass",
+            "Top with Red Bull"
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lime wedge",
+          "alcoholType": "liqueur",
+          "drinkColour": "#FF0033",
+          "abv": 0.35,
+          "missingIngredients": [],
+          "confidence": 1
+        }
+      ],
+      "explanation": ""
+    }
+  }
+}

@@ -1,0 +1,172 @@
+{
+  "meta": {
+    "createdAt": "2025-10-25T23:46:38.026Z",
+    "version": 1
+  },
+  "data": {
+    "body": {
+      "ingredients": [
+        "Red bull",
+        "whiskey",
+        "rum",
+        "vodka",
+        "Vodka",
+        "whiskey",
+        "rum",
+        "coke",
+        "orange juice",
+        "Rum",
+        "whiskey",
+        "gin",
+        "tonic",
+        "coke",
+        "orange juice"
+      ],
+      "filters": {
+        "isAlcoholic": true,
+        "abv": "",
+        "measurementType": "metric"
+      },
+      "recipes": []
+    },
+    "result": {
+      "recipes": [
+        {
+          "name": "Whiskey Coke",
+          "ingredients": [
+            {
+              "name": "whiskey",
+              "amount": 30,
+              "unit": "ml"
+            },
+            {
+              "name": "coke",
+              "amount": 100,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice",
+            "Add whiskey",
+            "Top with coke"
+          ],
+          "suggestedGlass": "highball",
+          "garnish": "lemon wedge",
+          "alcoholType": "whiskey",
+          "drinkColour": "#964B00",
+          "abv": 20,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Rum and Coke",
+          "ingredients": [
+            {
+              "name": "rum",
+              "amount": 30,
+              "unit": "ml"
+            },
+            {
+              "name": "coke",
+              "amount": 100,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice",
+            "Add rum",
+            "Top with coke"
+          ],
+          "suggestedGlass": "highball",
+          "garnish": "lime wedge",
+          "alcoholType": "rum",
+          "drinkColour": "#8B9467",
+          "abv": 20,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Vodka Tonic",
+          "ingredients": [
+            {
+              "name": "vodka",
+              "amount": 30,
+              "unit": "ml"
+            },
+            {
+              "name": "tonic",
+              "amount": 100,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice",
+            "Add vodka",
+            "Top with tonic"
+          ],
+          "suggestedGlass": "highball",
+          "garnish": "lime wedge",
+          "alcoholType": "vodka",
+          "drinkColour": "#D3D3D3",
+          "abv": 20,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Orange Juice Vodka",
+          "ingredients": [
+            {
+              "name": "vodka",
+              "amount": 30,
+              "unit": "ml"
+            },
+            {
+              "name": "orange juice",
+              "amount": 100,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice",
+            "Add vodka",
+            "Top with orange juice"
+          ],
+          "suggestedGlass": "highball",
+          "garnish": "orange slice",
+          "alcoholType": "vodka",
+          "drinkColour": "#FFA07A",
+          "abv": 20,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Gin Tonic",
+          "ingredients": [
+            {
+              "name": "gin",
+              "amount": 30,
+              "unit": "ml"
+            },
+            {
+              "name": "tonic",
+              "amount": 100,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice",
+            "Add gin",
+            "Top with tonic"
+          ],
+          "suggestedGlass": "highball",
+          "garnish": "lime wedge",
+          "alcoholType": "gin",
+          "drinkColour": "#D3D3D3",
+          "abv": 20,
+          "missingIngredients": [],
+          "confidence": 1
+        }
+      ]
+    }
+  }
+}

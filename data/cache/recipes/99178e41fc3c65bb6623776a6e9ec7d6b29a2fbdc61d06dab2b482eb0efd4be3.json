@@ -1,0 +1,166 @@
+{
+  "meta": {
+    "createdAt": "2025-10-25T23:45:18.191Z",
+    "version": 1
+  },
+  "data": {
+    "body": {
+      "ingredients": [
+        "Red bull",
+        "whiskey",
+        "rum",
+        "vodka",
+        "Vodka",
+        "whiskey",
+        "rum",
+        "coke",
+        "orange juice"
+      ],
+      "filters": {
+        "isAlcoholic": true,
+        "abv": "",
+        "measurementType": "metric"
+      },
+      "recipes": []
+    },
+    "result": {
+      "recipes": [
+        {
+          "name": "Vodka Coke",
+          "ingredients": [
+            {
+              "name": "Vodka",
+              "amount": 50,
+              "unit": "ml"
+            },
+            {
+              "name": "Coke",
+              "amount": 100,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a glass with ice",
+            "Pour in the vodka",
+            "Top with Coke"
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lime wedge",
+          "alcoholType": "Vodka",
+          "drinkColour": "#000000",
+          "abv": 0.4,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Rum and Coke",
+          "ingredients": [
+            {
+              "name": "Rum",
+              "amount": 50,
+              "unit": "ml"
+            },
+            {
+              "name": "Coke",
+              "amount": 100,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a glass with ice",
+            "Pour in the rum",
+            "Top with Coke"
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lime wedge",
+          "alcoholType": "Rum",
+          "drinkColour": "#000000",
+          "abv": 0.4,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Whiskey Coke",
+          "ingredients": [
+            {
+              "name": "Whiskey",
+              "amount": 50,
+              "unit": "ml"
+            },
+            {
+              "name": "Coke",
+              "amount": 100,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a glass with ice",
+            "Pour in the whiskey",
+            "Top with Coke"
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lime wedge",
+          "alcoholType": "Whiskey",
+          "drinkColour": "#000000",
+          "abv": 0.4,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Vodka Orange Juice",
+          "ingredients": [
+            {
+              "name": "Vodka",
+              "amount": 50,
+              "unit": "ml"
+            },
+            {
+              "name": "Orange juice",
+              "amount": 100,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a glass with ice",
+            "Pour in the vodka",
+            "Top with orange juice"
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Orange slice",
+          "alcoholType": "Vodka",
+          "drinkColour": "#FFA07A",
+          "abv": 0.4,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Red Bull Vodka",
+          "ingredients": [
+            {
+              "name": "Vodka",
+              "amount": 50,
+              "unit": "ml"
+            },
+            {
+              "name": "Red bull",
+              "amount": 100,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a glass with ice",
+            "Pour in the vodka",
+            "Top with Red Bull"
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lime wedge",
+          "alcoholType": "Vodka",
+          "drinkColour": "#FF0000",
+          "abv": 0.4,
+          "missingIngredients": [],
+          "confidence": 1
+        }
+      ]
+    }
+  }
+}

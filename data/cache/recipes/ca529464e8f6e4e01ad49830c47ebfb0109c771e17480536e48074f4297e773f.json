@@ -1,0 +1,173 @@
+{
+  "meta": {
+    "createdAt": "2025-10-25T23:38:49.950Z",
+    "version": 1
+  },
+  "data": {
+    "body": {
+      "ingredients": [
+        "Red bull",
+        "whiskey",
+        "rum",
+        "vodka"
+      ],
+      "filters": {
+        "isAlcoholic": true,
+        "abv": "",
+        "measurementType": "metric"
+      },
+      "recipes": []
+    },
+    "result": {
+      "recipes": [
+        {
+          "name": "Vodka Red Bull",
+          "ingredients": [
+            {
+              "name": "Vodka",
+              "amount": 30,
+              "unit": "ml"
+            },
+            {
+              "name": "Red Bull",
+              "amount": 120,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice",
+            "Pour in the vodka",
+            "Top with Red Bull",
+            "Stir gently"
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lime wedge",
+          "alcoholType": "Vodka",
+          "drinkColour": "#FF0000",
+          "abv": 5,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Rum Red Bull",
+          "ingredients": [
+            {
+              "name": "Rum",
+              "amount": 30,
+              "unit": "ml"
+            },
+            {
+              "name": "Red Bull",
+              "amount": 120,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice",
+            "Pour in the rum",
+            "Top with Red Bull",
+            "Stir gently"
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lime wedge",
+          "alcoholType": "Rum",
+          "drinkColour": "#FF0000",
+          "abv": 5,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Whiskey Red Bull",
+          "ingredients": [
+            {
+              "name": "Whiskey",
+              "amount": 30,
+              "unit": "ml"
+            },
+            {
+              "name": "Red Bull",
+              "amount": 120,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice",
+            "Pour in the whiskey",
+            "Top with Red Bull",
+            "Stir gently"
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Orange twist",
+          "alcoholType": "Whiskey",
+          "drinkColour": "#FF0000",
+          "abv": 5,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Dark Rum and Whiskey",
+          "ingredients": [
+            {
+              "name": "Rum",
+              "amount": 30,
+              "unit": "ml"
+            },
+            {
+              "name": "Whiskey",
+              "amount": 30,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a rocks glass with ice",
+            "Pour in the rum and whiskey",
+            "Stir gently"
+          ],
+          "suggestedGlass": "Rocks",
+          "garnish": "Orange twist",
+          "alcoholType": "Rum, Whiskey",
+          "drinkColour": "#964B00",
+          "abv": 20,
+          "missingIngredients": [],
+          "confidence": 0.6
+        },
+        {
+          "name": "Vodka Red Bull with a twist",
+          "ingredients": [
+            {
+              "name": "Vodka",
+              "amount": 30,
+              "unit": "ml"
+            },
+            {
+              "name": "Red Bull",
+              "amount": 120,
+              "unit": "ml"
+            },
+            {
+              "name": "Lime juice",
+              "amount": 15,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice",
+            "Pour in the vodka",
+            "Add a splash of lime juice",
+            "Top with Red Bull",
+            "Stir gently"
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lime wedge",
+          "alcoholType": "Vodka",
+          "drinkColour": "#FF0000",
+          "abv": 5,
+          "missingIngredients": [
+            "Lime juice"
+          ],
+          "confidence": 0.8
+        }
+      ]
+    }
+  }
+}

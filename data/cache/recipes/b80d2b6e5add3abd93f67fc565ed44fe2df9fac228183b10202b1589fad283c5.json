@@ -1,0 +1,140 @@
+{
+  "meta": {
+    "createdAt": "2025-10-25T23:57:37.522Z",
+    "version": 1
+  },
+  "data": {
+    "body": {
+      "ingredients": [
+        "Vodka",
+        "Coke",
+        "orange juice"
+      ],
+      "filters": {
+        "isAlcoholic": true,
+        "abv": "",
+        "measurementType": "metric"
+      },
+      "recipes": []
+    },
+    "result": {
+      "recipes": [
+        {
+          "name": "Vodka Orange",
+          "ingredients": [
+            {
+              "name": "Vodka",
+              "amount": 50,
+              "unit": "ml"
+            },
+            {
+              "name": "orange juice",
+              "amount": 100,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a glass with ice",
+            "Pour vodka and orange juice over ice",
+            "Stir gently"
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Orange slice",
+          "alcoholType": "Vodka",
+          "drinkColour": "#ffa500",
+          "abv": 0.4,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Vodka Coke",
+          "ingredients": [
+            {
+              "name": "Vodka",
+              "amount": 50,
+              "unit": "ml"
+            },
+            {
+              "name": "Coke",
+              "amount": 100,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a glass with ice",
+            "Pour vodka over ice",
+            "Top with Coke",
+            "Stir gently"
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lime wedge",
+          "alcoholType": "Vodka",
+          "drinkColour": "#000000",
+          "abv": 0.4,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Screwdriver",
+          "ingredients": [
+            {
+              "name": "Vodka",
+              "amount": 50,
+              "unit": "ml"
+            },
+            {
+              "name": "orange juice",
+              "amount": 100,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a glass with ice",
+            "Pour vodka and orange juice over ice",
+            "Stir gently"
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Orange slice",
+          "alcoholType": "Vodka",
+          "drinkColour": "#ffa500",
+          "abv": 0.4,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Vodka Orange Fizz",
+          "ingredients": [
+            {
+              "name": "Vodka",
+              "amount": 50,
+              "unit": "ml"
+            },
+            {
+              "name": "orange juice",
+              "amount": 50,
+              "unit": "ml"
+            },
+            {
+              "name": "Coke",
+              "amount": 50,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a glass with ice",
+            "Pour vodka and orange juice over ice",
+            "Top with Coke",
+            "Stir gently"
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Orange slice",
+          "alcoholType": "Vodka",
+          "drinkColour": "#ffa500",
+          "abv": 0.4,
+          "missingIngredients": [],
+          "confidence": 0.8
+        }
+      ]
+    }
+  }
+}

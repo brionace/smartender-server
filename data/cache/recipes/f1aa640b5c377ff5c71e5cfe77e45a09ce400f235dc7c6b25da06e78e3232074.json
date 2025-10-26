@@ -1,0 +1,171 @@
+{
+  "meta": {
+    "createdAt": "2025-10-25T23:53:50.177Z",
+    "version": 1
+  },
+  "data": {
+    "body": {
+      "ingredients": [
+        "Southern comfort",
+        "red bull",
+        "Coke",
+        "rum",
+        "Coke",
+        "rum",
+        "jd",
+        "Coke",
+        "jd"
+      ],
+      "filters": {
+        "isAlcoholic": true,
+        "abv": "",
+        "measurementType": "metric"
+      },
+      "recipes": []
+    },
+    "result": {
+      "recipes": [
+        {
+          "name": "Southern Comfort Cola",
+          "ingredients": [
+            {
+              "name": "Southern comfort",
+              "amount": 30,
+              "unit": "ml"
+            },
+            {
+              "name": "Coke",
+              "amount": 120,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice",
+            "Pour Southern Comfort over the ice",
+            "Top with Coke",
+            "Stir gently"
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lemon wheel",
+          "alcoholType": "Whiskey",
+          "drinkColour": "#FFC080",
+          "abv": 12,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Rum and Coke",
+          "ingredients": [
+            {
+              "name": "rum",
+              "amount": 30,
+              "unit": "ml"
+            },
+            {
+              "name": "Coke",
+              "amount": 120,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice",
+            "Pour rum over the ice",
+            "Top with Coke",
+            "Stir gently"
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lime wedge",
+          "alcoholType": "Rum",
+          "drinkColour": "#FFC080",
+          "abv": 10,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "JD and Coke",
+          "ingredients": [
+            {
+              "name": "jd",
+              "amount": 30,
+              "unit": "ml"
+            },
+            {
+              "name": "Coke",
+              "amount": 120,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice",
+            "Pour JD over the ice",
+            "Top with Coke",
+            "Stir gently"
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lemon wheel",
+          "alcoholType": "Whiskey",
+          "drinkColour": "#FFC080",
+          "abv": 12,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Red Bull Rum",
+          "ingredients": [
+            {
+              "name": "rum",
+              "amount": 30,
+              "unit": "ml"
+            },
+            {
+              "name": "Red Bull",
+              "amount": 120,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice",
+            "Pour rum over the ice",
+            "Top with Red Bull",
+            "Stir gently"
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lime wedge",
+          "alcoholType": "Rum",
+          "drinkColour": "#FF69B4",
+          "abv": 8,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Southern Comfort Red Bull",
+          "ingredients": [
+            {
+              "name": "Southern comfort",
+              "amount": 30,
+              "unit": "ml"
+            },
+            {
+              "name": "Red Bull",
+              "amount": 120,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice",
+            "Pour Southern Comfort over the ice",
+            "Top with Red Bull",
+            "Stir gently"
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lemon wheel",
+          "alcoholType": "Whiskey",
+          "drinkColour": "#FF69B4",
+          "abv": 10,
+          "missingIngredients": [],
+          "confidence": 1
+        }
+      ]
+    }
+  }
+}

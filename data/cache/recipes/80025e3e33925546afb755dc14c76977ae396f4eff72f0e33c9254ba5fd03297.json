@@ -1,0 +1,162 @@
+{
+  "meta": {
+    "createdAt": "2025-10-26T02:05:12.982Z",
+    "version": 1
+  },
+  "data": {
+    "body": {
+      "ingredients": [
+        "Coke",
+        "vodka",
+        "whiskey",
+        "gin",
+        "orange juice"
+      ],
+      "filters": {
+        "isAlcoholic": true,
+        "abv": "",
+        "measurementType": "metric"
+      },
+      "recipes": []
+    },
+    "result": {
+      "recipes": [
+        {
+          "name": "Vodka Orange",
+          "ingredients": [
+            {
+              "name": "vodka",
+              "amount": 30,
+              "unit": "ml"
+            },
+            {
+              "name": "orange juice",
+              "amount": 120,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice.",
+            "Pour in vodka and orange juice.",
+            "Stir gently."
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Orange slice",
+          "alcoholType": "Vodka",
+          "drinkColour": "#ffa500",
+          "abv": 20,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Whiskey Coke",
+          "ingredients": [
+            {
+              "name": "whiskey",
+              "amount": 30,
+              "unit": "ml"
+            },
+            {
+              "name": "Coke",
+              "amount": 120,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice.",
+            "Pour in whiskey and Coke.",
+            "Stir gently."
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lime wedge",
+          "alcoholType": "Whiskey",
+          "drinkColour": "#000000",
+          "abv": 20,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Gin Orange",
+          "ingredients": [
+            {
+              "name": "gin",
+              "amount": 30,
+              "unit": "ml"
+            },
+            {
+              "name": "orange juice",
+              "amount": 120,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice.",
+            "Pour in gin and orange juice.",
+            "Stir gently."
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Orange slice",
+          "alcoholType": "Gin",
+          "drinkColour": "#ffa500",
+          "abv": 20,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Vodka Coke",
+          "ingredients": [
+            {
+              "name": "vodka",
+              "amount": 30,
+              "unit": "ml"
+            },
+            {
+              "name": "Coke",
+              "amount": 120,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice.",
+            "Pour in vodka and Coke.",
+            "Stir gently."
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lime wedge",
+          "alcoholType": "Vodka",
+          "drinkColour": "#000000",
+          "abv": 20,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Gin Coke",
+          "ingredients": [
+            {
+              "name": "gin",
+              "amount": 30,
+              "unit": "ml"
+            },
+            {
+              "name": "Coke",
+              "amount": 120,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice.",
+            "Pour in gin and Coke.",
+            "Stir gently."
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lime wedge",
+          "alcoholType": "Gin",
+          "drinkColour": "#000000",
+          "abv": 20,
+          "missingIngredients": [],
+          "confidence": 1
+        }
+      ]
+    }
+  }
+}

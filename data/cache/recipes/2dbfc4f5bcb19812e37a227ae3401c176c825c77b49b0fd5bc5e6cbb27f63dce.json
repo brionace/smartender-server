@@ -1,0 +1,176 @@
+{
+  "meta": {
+    "createdAt": "2025-10-26T01:53:56.172Z",
+    "version": 1
+  },
+  "data": {
+    "body": {
+      "ingredients": [
+        "Vodka",
+        "orange juice",
+        "Coke",
+        "rum",
+        "gin",
+        "Jd",
+        "coke",
+        "Jd",
+        "coke",
+        "Vodka",
+        "Jd",
+        "coke",
+        "Jd",
+        "coke"
+      ],
+      "filters": {
+        "isAlcoholic": true,
+        "abv": "",
+        "measurementType": "metric"
+      },
+      "recipes": []
+    },
+    "result": {
+      "recipes": [
+        {
+          "name": "Vodka Coke",
+          "ingredients": [
+            {
+              "name": "Vodka",
+              "amount": 50,
+              "unit": "ml"
+            },
+            {
+              "name": "Coke",
+              "amount": 100,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice.",
+            "Pour in the vodka.",
+            "Top with Coke.",
+            "Stir gently."
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lime wedge",
+          "alcoholType": "Vodka",
+          "drinkColour": "#FF0000",
+          "abv": 5,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Rum Coke",
+          "ingredients": [
+            {
+              "name": "Rum",
+              "amount": 50,
+              "unit": "ml"
+            },
+            {
+              "name": "Coke",
+              "amount": 100,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice.",
+            "Pour in the rum.",
+            "Top with Coke.",
+            "Stir gently."
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lime wedge",
+          "alcoholType": "Rum",
+          "drinkColour": "#FF0000",
+          "abv": 5,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "JD Coke",
+          "ingredients": [
+            {
+              "name": "Jd",
+              "amount": 50,
+              "unit": "ml"
+            },
+            {
+              "name": "Coke",
+              "amount": 100,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice.",
+            "Pour in the JD.",
+            "Top with Coke.",
+            "Stir gently."
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lime wedge",
+          "alcoholType": "Whiskey",
+          "drinkColour": "#FF0000",
+          "abv": 5,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Gin and Orange Juice",
+          "ingredients": [
+            {
+              "name": "Gin",
+              "amount": 50,
+              "unit": "ml"
+            },
+            {
+              "name": "Orange juice",
+              "amount": 100,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice.",
+            "Pour in the gin.",
+            "Top with orange juice.",
+            "Stir gently."
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Orange slice",
+          "alcoholType": "Gin",
+          "drinkColour": "#FFA07A",
+          "abv": 3.75,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Screwdriver",
+          "ingredients": [
+            {
+              "name": "Vodka",
+              "amount": 50,
+              "unit": "ml"
+            },
+            {
+              "name": "Orange juice",
+              "amount": 100,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice.",
+            "Pour in the vodka.",
+            "Top with orange juice.",
+            "Stir gently."
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Orange slice",
+          "alcoholType": "Vodka",
+          "drinkColour": "#FFA07A",
+          "abv": 3.75,
+          "missingIngredients": [],
+          "confidence": 1
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,167 @@
+{
+  "meta": {
+    "createdAt": "2025-10-26T01:52:33.383Z",
+    "version": 1
+  },
+  "data": {
+    "body": {
+      "ingredients": [
+        "Vodka",
+        "orange juice",
+        "Coke",
+        "rum",
+        "gin",
+        "Jd",
+        "coke",
+        "Jd",
+        "coke",
+        "Vodka"
+      ],
+      "filters": {
+        "isAlcoholic": true,
+        "abv": "",
+        "measurementType": "metric"
+      },
+      "recipes": []
+    },
+    "result": {
+      "recipes": [
+        {
+          "name": "Vodka Coke",
+          "ingredients": [
+            {
+              "name": "Vodka",
+              "amount": 30,
+              "unit": "ml"
+            },
+            {
+              "name": "Coke",
+              "amount": 100,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice",
+            "Add vodka",
+            "Top with Coke"
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lime wedge",
+          "alcoholType": "Vodka",
+          "drinkColour": "#000000",
+          "abv": 0.32,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Rum and Coke",
+          "ingredients": [
+            {
+              "name": "Rum",
+              "amount": 30,
+              "unit": "ml"
+            },
+            {
+              "name": "Coke",
+              "amount": 100,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice",
+            "Add rum",
+            "Top with Coke"
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lime wedge",
+          "alcoholType": "Rum",
+          "drinkColour": "#000000",
+          "abv": 0.35,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Gin and Orange Juice",
+          "ingredients": [
+            {
+              "name": "Gin",
+              "amount": 30,
+              "unit": "ml"
+            },
+            {
+              "name": "Orange juice",
+              "amount": 100,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a cocktail shaker with ice",
+            "Add gin and orange juice",
+            "Shake and strain into a chilled glass"
+          ],
+          "suggestedGlass": "Cocktail",
+          "garnish": "Orange slice",
+          "alcoholType": "Gin",
+          "drinkColour": "#FFA07A",
+          "abv": 0.27,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "JD and Coke",
+          "ingredients": [
+            {
+              "name": "Jd",
+              "amount": 30,
+              "unit": "ml"
+            },
+            {
+              "name": "Coke",
+              "amount": 100,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice",
+            "Add JD",
+            "Top with Coke"
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lime wedge",
+          "alcoholType": "Whiskey",
+          "drinkColour": "#000000",
+          "abv": 0.35,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Vodka Orange Juice",
+          "ingredients": [
+            {
+              "name": "Vodka",
+              "amount": 30,
+              "unit": "ml"
+            },
+            {
+              "name": "Orange juice",
+              "amount": 100,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a cocktail shaker with ice",
+            "Add vodka and orange juice",
+            "Shake and strain into a chilled glass"
+          ],
+          "suggestedGlass": "Cocktail",
+          "garnish": "Orange slice",
+          "alcoholType": "Vodka",
+          "drinkColour": "#FFA07A",
+          "abv": 0.24,
+          "missingIngredients": [],
+          "confidence": 1
+        }
+      ]
+    }
+  }
+}

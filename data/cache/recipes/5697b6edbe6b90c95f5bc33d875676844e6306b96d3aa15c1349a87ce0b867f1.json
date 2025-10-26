@@ -1,0 +1,165 @@
+{
+  "meta": {
+    "createdAt": "2025-10-25T23:51:02.730Z",
+    "version": 1
+  },
+  "data": {
+    "body": {
+      "ingredients": [
+        "Southern comfort",
+        "red bull",
+        "Coke",
+        "rum"
+      ],
+      "filters": {
+        "isAlcoholic": true,
+        "abv": "",
+        "measurementType": "metric"
+      },
+      "recipes": []
+    },
+    "result": {
+      "recipes": [
+        {
+          "name": "Southern Comfort Cola",
+          "ingredients": [
+            {
+              "name": "Southern Comfort",
+              "amount": 30,
+              "unit": "ml"
+            },
+            {
+              "name": "Coke",
+              "amount": 120,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a glass with ice",
+            "Add Southern Comfort",
+            "Top with Coke",
+            "Stir gently"
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lime wedge",
+          "alcoholType": "Liqueur",
+          "drinkColour": "#FFC080",
+          "abv": 0.26,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Rum and Red Bull",
+          "ingredients": [
+            {
+              "name": "rum",
+              "amount": 30,
+              "unit": "ml"
+            },
+            {
+              "name": "Red Bull",
+              "amount": 120,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a glass with ice",
+            "Add rum",
+            "Top with Red Bull",
+            "Stir gently"
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lime wedge",
+          "alcoholType": "Spirit",
+          "drinkColour": "#FF0000",
+          "abv": 0.3,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Southern Comfort and Red Bull",
+          "ingredients": [
+            {
+              "name": "Southern Comfort",
+              "amount": 30,
+              "unit": "ml"
+            },
+            {
+              "name": "Red Bull",
+              "amount": 120,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a glass with ice",
+            "Add Southern Comfort",
+            "Top with Red Bull",
+            "Stir gently"
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lime wedge",
+          "alcoholType": "Liqueur",
+          "drinkColour": "#FFC080",
+          "abv": 0.26,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Rum and Coke",
+          "ingredients": [
+            {
+              "name": "rum",
+              "amount": 30,
+              "unit": "ml"
+            },
+            {
+              "name": "Coke",
+              "amount": 120,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a glass with ice",
+            "Add rum",
+            "Top with Coke",
+            "Stir gently"
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lime wedge",
+          "alcoholType": "Spirit",
+          "drinkColour": "#008000",
+          "abv": 0.3,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Southern Comfort and Rum",
+          "ingredients": [
+            {
+              "name": "Southern Comfort",
+              "amount": 30,
+              "unit": "ml"
+            },
+            {
+              "name": "rum",
+              "amount": 30,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a glass with ice",
+            "Add Southern Comfort and rum",
+            "Stir gently"
+          ],
+          "suggestedGlass": "Old Fashioned",
+          "garnish": "Orange peel",
+          "alcoholType": "Liqueur/Spirit",
+          "drinkColour": "#FFC080",
+          "abv": 0.56,
+          "missingIngredients": [],
+          "confidence": 1
+        }
+      ]
+    }
+  }
+}

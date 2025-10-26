@@ -1,0 +1,168 @@
+{
+  "meta": {
+    "createdAt": "2025-10-26T01:38:38.059Z",
+    "version": 1
+  },
+  "data": {
+    "body": {
+      "ingredients": [
+        "Vodka",
+        "whiskey",
+        "rum",
+        "coke",
+        "orange juice"
+      ],
+      "filters": {
+        "isAlcoholic": true,
+        "abv": "",
+        "measurementType": "metric"
+      },
+      "recipes": []
+    },
+    "result": {
+      "recipes": [
+        {
+          "name": "Vodka Coke",
+          "ingredients": [
+            {
+              "name": "Vodka",
+              "amount": 50,
+              "unit": "ml"
+            },
+            {
+              "name": "Coke",
+              "amount": 100,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice",
+            "Add vodka",
+            "Top with Coke",
+            "Stir briefly"
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lime wedge",
+          "alcoholType": "Vodka",
+          "drinkColour": "#000000",
+          "abv": 0.4,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Rum and Coke",
+          "ingredients": [
+            {
+              "name": "Rum",
+              "amount": 50,
+              "unit": "ml"
+            },
+            {
+              "name": "Coke",
+              "amount": 100,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice",
+            "Add rum",
+            "Top with Coke",
+            "Stir briefly"
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lime wedge",
+          "alcoholType": "Rum",
+          "drinkColour": "#000000",
+          "abv": 0.4,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Whiskey Sour",
+          "ingredients": [
+            {
+              "name": "Whiskey",
+              "amount": 50,
+              "unit": "ml"
+            },
+            {
+              "name": "Orange juice",
+              "amount": 50,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a cocktail shaker with ice",
+            "Add whiskey and orange juice",
+            "Shake until chilled",
+            "Strain into a rocks glass with ice"
+          ],
+          "suggestedGlass": "Rocks",
+          "garnish": "Orange slice",
+          "alcoholType": "Whiskey",
+          "drinkColour": "#FFA07A",
+          "abv": 0.35,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Vodka Orange",
+          "ingredients": [
+            {
+              "name": "Vodka",
+              "amount": 50,
+              "unit": "ml"
+            },
+            {
+              "name": "Orange juice",
+              "amount": 50,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a cocktail shaker with ice",
+            "Add vodka and orange juice",
+            "Shake until chilled",
+            "Strain into a rocks glass with ice"
+          ],
+          "suggestedGlass": "Rocks",
+          "garnish": "Orange slice",
+          "alcoholType": "Vodka",
+          "drinkColour": "#FFA07A",
+          "abv": 0.35,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Dark 'N' Stormy",
+          "ingredients": [
+            {
+              "name": "Rum",
+              "amount": 50,
+              "unit": "ml"
+            },
+            {
+              "name": "Coke",
+              "amount": 100,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice",
+            "Add rum",
+            "Top with Coke",
+            "Stir briefly",
+            "Add a squeeze of lime"
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lime wedge",
+          "alcoholType": "Rum",
+          "drinkColour": "#000000",
+          "abv": 0.4,
+          "missingIngredients": [],
+          "confidence": 1
+        }
+      ]
+    }
+  }
+}

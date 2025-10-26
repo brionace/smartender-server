@@ -1,0 +1,143 @@
+{
+  "meta": {
+    "createdAt": "2025-10-26T01:51:44.746Z",
+    "version": 1
+  },
+  "data": {
+    "body": {
+      "ingredients": [
+        "Vodka",
+        "orange juice",
+        "Coke",
+        "rum",
+        "gin",
+        "Jd",
+        "coke",
+        "Jd",
+        "coke"
+      ],
+      "filters": {
+        "isAlcoholic": true,
+        "abv": "",
+        "measurementType": "metric"
+      },
+      "recipes": []
+    },
+    "result": {
+      "recipes": [
+        {
+          "name": "Vodka Coke",
+          "ingredients": [
+            {
+              "name": "Vodka",
+              "amount": 30,
+              "unit": "ml"
+            },
+            {
+              "name": "Coke",
+              "amount": 150,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice",
+            "Add vodka",
+            "Top with Coke",
+            "Stir briefly"
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lime wedge",
+          "alcoholType": "Vodka",
+          "drinkColour": "#000000",
+          "abv": 0.32,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Rum and Coke",
+          "ingredients": [
+            {
+              "name": "Rum",
+              "amount": 30,
+              "unit": "ml"
+            },
+            {
+              "name": "Coke",
+              "amount": 150,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice",
+            "Add rum",
+            "Top with Coke",
+            "Stir briefly"
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lime wedge",
+          "alcoholType": "Rum",
+          "drinkColour": "#000000",
+          "abv": 0.35,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Gin and Orange Juice",
+          "ingredients": [
+            {
+              "name": "Gin",
+              "amount": 30,
+              "unit": "ml"
+            },
+            {
+              "name": "Orange juice",
+              "amount": 150,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a cocktail shaker with ice",
+            "Add gin and orange juice",
+            "Shake well",
+            "Strain into a chilled glass"
+          ],
+          "suggestedGlass": "Cocktail",
+          "garnish": "Orange slice",
+          "alcoholType": "Gin",
+          "drinkColour": "#FFA07A",
+          "abv": 0.28,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "JD and Coke",
+          "ingredients": [
+            {
+              "name": "Jd",
+              "amount": 30,
+              "unit": "ml"
+            },
+            {
+              "name": "Coke",
+              "amount": 150,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice",
+            "Add JD",
+            "Top with Coke",
+            "Stir briefly"
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lemon wedge",
+          "alcoholType": "Whiskey",
+          "drinkColour": "#000000",
+          "abv": 0.38,
+          "missingIngredients": [],
+          "confidence": 1
+        }
+      ]
+    }
+  }
+}

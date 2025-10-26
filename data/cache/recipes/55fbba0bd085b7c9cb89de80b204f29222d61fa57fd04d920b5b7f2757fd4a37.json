@@ -1,0 +1,162 @@
+{
+  "meta": {
+    "createdAt": "2025-10-26T01:27:45.408Z",
+    "version": 1
+  },
+  "data": {
+    "body": {
+      "ingredients": [
+        "Vodka",
+        "Coke",
+        "rum",
+        "gin",
+        "orange juice"
+      ],
+      "filters": {
+        "isAlcoholic": true,
+        "abv": "",
+        "measurementType": "metric"
+      },
+      "recipes": []
+    },
+    "result": {
+      "recipes": [
+        {
+          "name": "Vodka Coke",
+          "ingredients": [
+            {
+              "name": "Vodka",
+              "amount": 50,
+              "unit": "ml"
+            },
+            {
+              "name": "Coke",
+              "amount": 100,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice.",
+            "Pour vodka over the ice.",
+            "Top with Coke.",
+            "Stir briefly."
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lime wedge",
+          "alcoholType": "Vodka",
+          "drinkColour": "#000000",
+          "abv": 0.32,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Rum and Coke",
+          "ingredients": [
+            {
+              "name": "Rum",
+              "amount": 50,
+              "unit": "ml"
+            },
+            {
+              "name": "Coke",
+              "amount": 100,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice.",
+            "Pour rum over the ice.",
+            "Top with Coke.",
+            "Stir briefly."
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lime wedge",
+          "alcoholType": "Rum",
+          "drinkColour": "#000000",
+          "abv": 0.35,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Gin and Juice",
+          "ingredients": [
+            {
+              "name": "Gin",
+              "amount": 50,
+              "unit": "ml"
+            },
+            {
+              "name": "Orange juice",
+              "amount": 100,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice.",
+            "Pour gin over the ice.",
+            "Top with orange juice.",
+            "Stir briefly."
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Orange slice",
+          "alcoholType": "Gin",
+          "drinkColour": "#FFA500",
+          "abv": 0.28,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Vodka Orange Juice",
+          "ingredients": [
+            {
+              "name": "Vodka",
+              "amount": 50,
+              "unit": "ml"
+            },
+            {
+              "name": "Orange juice",
+              "amount": 100,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice.",
+            "Pour vodka over the ice.",
+            "Top with orange juice.",
+            "Stir briefly."
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Orange slice",
+          "alcoholType": "Vodka",
+          "drinkColour": "#FFA500",
+          "abv": 0.25,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Gin Fizz",
+          "ingredients": [
+            {
+              "name": "Gin",
+              "amount": 50,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a shaker with ice.",
+            "Pour gin over the ice.",
+            "Shake until chilled.",
+            "Strain into a chilled glass."
+          ],
+          "suggestedGlass": "Coupe",
+          "garnish": "Lemon twist",
+          "alcoholType": "Gin",
+          "drinkColour": "#FFFFFF",
+          "abv": 0.38,
+          "missingIngredients": [],
+          "confidence": 0.8
+        }
+      ]
+    }
+  }
+}

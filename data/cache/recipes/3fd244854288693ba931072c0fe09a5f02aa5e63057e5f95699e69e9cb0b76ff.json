@@ -1,0 +1,138 @@
+{
+  "meta": {
+    "createdAt": "2025-10-26T01:21:00.349Z",
+    "version": 1
+  },
+  "data": {
+    "body": {
+      "ingredients": [
+        "Vodka",
+        "Coke",
+        "orange juice",
+        "rum"
+      ],
+      "filters": {
+        "isAlcoholic": true,
+        "abv": "",
+        "measurementType": "metric"
+      },
+      "recipes": []
+    },
+    "result": {
+      "recipes": [
+        {
+          "name": "Vodka Coke",
+          "ingredients": [
+            {
+              "name": "Vodka",
+              "amount": 50,
+              "unit": "ml"
+            },
+            {
+              "name": "Coke",
+              "amount": 100,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice.",
+            "Pour vodka over the ice.",
+            "Top with Coke.",
+            "Stir gently."
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lime wedge",
+          "alcoholType": "Vodka",
+          "drinkColour": "#000000",
+          "abv": 0.4,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Rum and Coke",
+          "ingredients": [
+            {
+              "name": "Rum",
+              "amount": 50,
+              "unit": "ml"
+            },
+            {
+              "name": "Coke",
+              "amount": 100,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice.",
+            "Pour rum over the ice.",
+            "Top with Coke.",
+            "Stir gently."
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lime wedge",
+          "alcoholType": "Rum",
+          "drinkColour": "#000000",
+          "abv": 0.5,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Screwdriver",
+          "ingredients": [
+            {
+              "name": "Vodka",
+              "amount": 50,
+              "unit": "ml"
+            },
+            {
+              "name": "orange juice",
+              "amount": 100,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice.",
+            "Pour vodka over the ice.",
+            "Top with orange juice.",
+            "Stir gently."
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Orange slice",
+          "alcoholType": "Vodka",
+          "drinkColour": "#FFA07A",
+          "abv": 0.4,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Orange Rum",
+          "ingredients": [
+            {
+              "name": "Rum",
+              "amount": 50,
+              "unit": "ml"
+            },
+            {
+              "name": "orange juice",
+              "amount": 100,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice.",
+            "Pour rum over the ice.",
+            "Top with orange juice.",
+            "Stir gently."
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Orange slice",
+          "alcoholType": "Rum",
+          "drinkColour": "#FFA07A",
+          "abv": 0.5,
+          "missingIngredients": [],
+          "confidence": 1
+        }
+      ]
+    }
+  }
+}
