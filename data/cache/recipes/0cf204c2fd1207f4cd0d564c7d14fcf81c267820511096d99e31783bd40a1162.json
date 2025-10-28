@@ -1,0 +1,45 @@
+{
+  "meta": {
+    "createdAt": "2025-10-26T04:39:11.471Z",
+    "version": 1
+  },
+  "data": {
+    "body": {
+      "ingredients": [
+        "Tonic water"
+      ],
+      "filters": {
+        "isAlcoholic": true,
+        "abv": "",
+        "measurementType": "metric"
+      },
+      "recipes": []
+    },
+    "result": {
+      "recipes": [
+        {
+          "name": "Tonic Water Spritzer",
+          "ingredients": [
+            {
+              "name": "Tonic water",
+              "amount": 200,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Pour tonic water into a glass",
+            "Stir gently"
+          ],
+          "suggestedGlass": "Highball glass",
+          "garnish": "Lime wedge",
+          "alcoholType": "Non-alcoholic",
+          "drinkColour": "#FFFFFF",
+          "abv": 0,
+          "missingIngredients": [],
+          "confidence": 1
+        }
+      ],
+      "explanation": ""
+    }
+  }
+}

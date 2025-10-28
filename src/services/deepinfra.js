@@ -4,6 +4,7 @@ import {
   GENERATE_RECIPE_PROMPT,
   GENERATE_RECIPE_PROMPT_SIMPLE,
 } from "./utils/prompts.js";
+import logger from "../utils/logger.js";
 import { validateRecipesResponse } from "./utils/validateRecipe.js";
 
 class AIServiceOpenAI {
@@ -51,6 +52,7 @@ class AIServiceOpenAI {
 
     // Use deterministic, faster settings
     try {
+      const networkStart = Date.now();
       const response = await axios.post(
         this.baseUrl,
         {
@@ -67,6 +69,7 @@ class AIServiceOpenAI {
           timeout: 60000,
         }
       );
+      const networkLatencyMs = Date.now() - networkStart;
 
       const text =
         response.data.choices?.[0]?.message?.content ||
@@ -84,10 +87,21 @@ class AIServiceOpenAI {
       // Try to extract JSON from the response
       const jsonMatch =
         text.match(/```json\n?(.*?)\n?```/s) || text.match(/\{.*\}/s);
+      let parseLatencyMs = 0;
       if (jsonMatch) {
         try {
+          const parseStart = Date.now();
           const jsonStr = jsonMatch[1] || jsonMatch[0];
-          return JSON.parse(jsonStr);
+          const parsed = JSON.parse(jsonStr);
+          parseLatencyMs = Date.now() - parseStart;
+          return {
+            data: parsed,
+            timings: {
+              networkLatencyMs,
+              parseLatencyMs,
+              totalMs: networkLatencyMs + parseLatencyMs,
+            },
+          };
         } catch (parseError) {
           throw new Error(
             `Failed to parse JSON response. Raw response: ${text}`
@@ -97,14 +111,24 @@ class AIServiceOpenAI {
 
       // If no JSON found, try to parse the entire response
       try {
-        return JSON.parse(text);
+        const parseStart = Date.now();
+        const parsed = JSON.parse(text);
+        parseLatencyMs = Date.now() - parseStart;
+        return {
+          data: parsed,
+          timings: {
+            networkLatencyMs,
+            parseLatencyMs,
+            totalMs: networkLatencyMs + parseLatencyMs,
+          },
+        };
       } catch (parseError) {
         throw new Error(
           `AI response was not valid JSON. Raw response: ${text}`
         );
       }
     } catch (error) {
-      console.log({ error });
+      logger.warn("DeepInfra call failed", { error: error?.message || error });
       if (error.response) {
         if (error.response.status === 400) {
           throw new Error(
@@ -134,15 +158,78 @@ class AIServiceOpenAI {
     });
 
     try {
-      const result = await this.callOpenAIAPI(prompt, input.photoDataUri);
+      const response = await this.callOpenAIAPI(prompt, input.photoDataUri);
+      // response may be { data, timings } when debug; normalize
+      const payload = response && response.data ? response.data : response;
 
-      if (!result || !Array.isArray(result.ingredients)) {
+      // The prompt historically returned `ingredients: []`, but newer prompts
+      // return `{ newIngredients: [], duplicates: [], guesses: [], uncertain }`.
+      // Normalize both shapes into { ingredients: [...], duplicates: [...], guesses: [...], uncertain: boolean }
+      let normalized = null;
+      if (payload && Array.isArray(payload.ingredients)) {
+        normalized = {
+          ingredients: payload.ingredients,
+          duplicates: payload.duplicates || [],
+          guesses: payload.guesses || [],
+          uncertain: !!payload.uncertain,
+        };
+      } else if (payload && Array.isArray(payload.newIngredients)) {
+        normalized = {
+          ingredients: payload.newIngredients,
+          duplicates: payload.duplicates || [],
+          guesses: payload.guesses || [],
+          uncertain: !!payload.uncertain,
+        };
+      } else {
+        // Try a permissive heuristic: look for any array of strings inside payload
+        const findStringArray = (obj) => {
+          if (!obj || typeof obj !== "object") return null;
+          for (const key of Object.keys(obj)) {
+            const v = obj[key];
+            if (Array.isArray(v) && v.every((x) => typeof x === "string"))
+              return v;
+            if (typeof v === "object") {
+              const nested = findStringArray(v);
+              if (nested) return nested;
+            }
+          }
+          return null;
+        };
+
+        const found = findStringArray(payload);
+        if (found) {
+          const normalized = {
+            ingredients: found,
+            duplicates: payload.duplicates || [],
+            guesses: payload.guesses || [],
+            uncertain: !!payload.uncertain,
+          };
+          logger.warn(
+            "Used heuristic to extract ingredients from unexpected payload",
+            { preview: JSON.stringify(found).slice(0, 500) }
+          );
+          return response && response.timings
+            ? { data: normalized, timings: response.timings }
+            : normalized;
+        }
+
+        // Log the unexpected payload for debugging (safe-truncate)
+        try {
+          const preview = JSON.stringify(payload).slice(0, 2000);
+          logger.warn("Unexpected identify payload shape", { preview });
+        } catch (e) {
+          logger.warn("Unexpected identify payload shape (unserializable)");
+        }
         throw new Error("Invalid response format from AI service");
       }
 
-      return result;
+      return response && response.timings
+        ? { data: normalized, timings: response.timings }
+        : normalized;
     } catch (error) {
-      console.error("Error identifying ingredients:", error);
+      logger.warn("Error identifying ingredients", {
+        error: error?.message || error,
+      });
       throw new Error(`Failed to identify ingredients: ${error.message}`);
     }
   }
@@ -155,7 +242,8 @@ class AIServiceOpenAI {
     });
 
     try {
-      const result = await this.callOpenAIAPI(prompt);
+      const response = await this.callOpenAIAPI(prompt);
+      const result = response && response.data ? response.data : response;
 
       if (!result || !Array.isArray(result.recipes)) {
         throw new Error("Invalid response format from AI service");
@@ -176,9 +264,13 @@ class AIServiceOpenAI {
         existingRecipes: input?.recipes || [],
       });
 
-      return result;
+      return response && response.timings
+        ? { data: result, timings: response.timings }
+        : result;
     } catch (error) {
-      console.error("Error generating recipes:", error);
+      logger.error("Error generating recipes", {
+        error: error?.message || error,
+      });
       throw new Error(`Failed to generate recipes: ${error.message}`);
     }
   }

@@ -1,0 +1,75 @@
+{
+  "meta": {
+    "createdAt": "2025-10-26T04:39:54.335Z",
+    "version": 1
+  },
+  "data": {
+    "body": {
+      "ingredients": [
+        "Tonic water",
+        "Gin"
+      ],
+      "filters": {
+        "isAlcoholic": true,
+        "abv": "",
+        "measurementType": "metric"
+      },
+      "recipes": [
+        {
+          "name": "Tonic Water Spritzer",
+          "ingredients": [
+            {
+              "name": "Tonic water",
+              "amount": 200,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Pour tonic water into a glass",
+            "Stir gently"
+          ],
+          "suggestedGlass": "Highball glass",
+          "garnish": "Lime wedge",
+          "alcoholType": "Non-alcoholic",
+          "drinkColour": "#FFFFFF",
+          "abv": 0,
+          "missingIngredients": [],
+          "confidence": 1
+        }
+      ]
+    },
+    "result": {
+      "recipes": [
+        {
+          "name": "Gin and Tonic",
+          "ingredients": [
+            {
+              "name": "Gin",
+              "amount": 50,
+              "unit": "ml"
+            },
+            {
+              "name": "Tonic water",
+              "amount": 150,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a glass with ice.",
+            "Pour the gin over the ice.",
+            "Top with tonic water.",
+            "Stir gently."
+          ],
+          "suggestedGlass": "Highball glass",
+          "garnish": "Lime wedge",
+          "alcoholType": "Gin",
+          "drinkColour": "#D3E0F4",
+          "abv": 37.5,
+          "missingIngredients": [],
+          "confidence": 1
+        }
+      ],
+      "explanation": ""
+    }
+  }
+}

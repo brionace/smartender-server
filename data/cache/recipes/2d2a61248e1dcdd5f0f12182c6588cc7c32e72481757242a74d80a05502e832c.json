@@ -1,0 +1,53 @@
+{
+  "meta": {
+    "createdAt": "2025-10-27T21:10:43.408Z",
+    "version": 1
+  },
+  "data": {
+    "body": {
+      "ingredients": [
+        "Vodka",
+        "Vodka"
+      ],
+      "filters": {
+        "isAlcoholic": true,
+        "abv": "",
+        "measurementType": "metric"
+      },
+      "recipes": []
+    },
+    "result": {
+      "recipes": [
+        {
+          "name": "Vodka Spritz",
+          "ingredients": [
+            {
+              "name": "Vodka",
+              "amount": 30,
+              "unit": "ml"
+            },
+            {
+              "name": "Vodka",
+              "amount": 30,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a glass with ice",
+            "Pour both vodkas over the ice",
+            "Top with soda water",
+            "Stir gently"
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lemon slice",
+          "alcoholType": "Cocktail",
+          "drinkColour": "#ffffff",
+          "abv": 20,
+          "missingIngredients": [],
+          "confidence": 0.5
+        }
+      ],
+      "explanation": "A simple recipe that requires additional ingredients for a complete drink."
+    }
+  }
+}

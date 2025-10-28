@@ -1,0 +1,46 @@
+{
+  "meta": {
+    "createdAt": "2025-10-27T21:41:12.922Z",
+    "version": 1
+  },
+  "data": {
+    "body": {
+      "ingredients": [
+        "rum",
+        "lime"
+      ]
+    },
+    "result": {
+      "recipes": [
+        {
+          "name": "Rum and Lime",
+          "ingredients": [
+            {
+              "name": "rum",
+              "amount": 2,
+              "unit": "oz"
+            },
+            {
+              "name": "lime",
+              "amount": 0.5,
+              "unit": "oz"
+            }
+          ],
+          "instructions": [
+            "Juice the lime",
+            "Mix rum and lime juice in a glass",
+            "Stir"
+          ],
+          "suggestedGlass": "Highball",
+          "garnish": "Lime wedge",
+          "alcoholType": "rum",
+          "drinkColour": "#F7DC6F",
+          "abv": 40,
+          "missingIngredients": [],
+          "confidence": 1
+        }
+      ],
+      "explanation": ""
+    }
+  }
+}

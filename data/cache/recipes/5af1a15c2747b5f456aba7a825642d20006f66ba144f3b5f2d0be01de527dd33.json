@@ -1,0 +1,160 @@
+{
+  "meta": {
+    "createdAt": "2025-10-26T03:33:16.808Z",
+    "version": 1
+  },
+  "data": {
+    "body": {
+      "ingredients": [
+        "vodka",
+        "red bull",
+        "rum",
+        "southern comfort"
+      ],
+      "filters": {
+        "isAlcoholic": true,
+        "abv": "",
+        "measurementType": "metric"
+      },
+      "recipes": []
+    },
+    "result": {
+      "recipes": [
+        {
+          "name": "Vodka Red Bull",
+          "ingredients": [
+            {
+              "name": "vodka",
+              "amount": 50,
+              "unit": "ml"
+            },
+            {
+              "name": "red bull",
+              "amount": 100,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice",
+            "Add vodka",
+            "Top with Red Bull",
+            "Stir gently"
+          ],
+          "suggestedGlass": "highball",
+          "garnish": "lime wedge",
+          "alcoholType": "vodka",
+          "drinkColour": "#FF0000",
+          "abv": 0.4,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Southern Comfort",
+          "ingredients": [
+            {
+              "name": "southern comfort",
+              "amount": 50,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a rocks glass with ice",
+            "Add Southern Comfort",
+            "Serve and enjoy"
+          ],
+          "suggestedGlass": "rocks",
+          "garnish": "orange slice",
+          "alcoholType": "liqueur",
+          "drinkColour": "#FFC080",
+          "abv": 0.35,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Rum and Red Bull",
+          "ingredients": [
+            {
+              "name": "rum",
+              "amount": 50,
+              "unit": "ml"
+            },
+            {
+              "name": "red bull",
+              "amount": 100,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice",
+            "Add rum",
+            "Top with Red Bull",
+            "Stir gently"
+          ],
+          "suggestedGlass": "highball",
+          "garnish": "lime wedge",
+          "alcoholType": "rum",
+          "drinkColour": "#FF0000",
+          "abv": 0.45,
+          "missingIngredients": [],
+          "confidence": 1
+        },
+        {
+          "name": "Vodka Southern Comfort",
+          "ingredients": [
+            {
+              "name": "vodka",
+              "amount": 25,
+              "unit": "ml"
+            },
+            {
+              "name": "southern comfort",
+              "amount": 25,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a cocktail shaker with ice",
+            "Add vodka and Southern Comfort",
+            "Shake well",
+            "Strain into a chilled glass"
+          ],
+          "suggestedGlass": "martini",
+          "garnish": "lemon twist",
+          "alcoholType": "mixed",
+          "drinkColour": "#C080FF",
+          "abv": 0.4,
+          "missingIngredients": [],
+          "confidence": 0.8
+        },
+        {
+          "name": "Southern Comfort and Red Bull",
+          "ingredients": [
+            {
+              "name": "southern comfort",
+              "amount": 25,
+              "unit": "ml"
+            },
+            {
+              "name": "red bull",
+              "amount": 100,
+              "unit": "ml"
+            }
+          ],
+          "instructions": [
+            "Fill a highball glass with ice",
+            "Add Southern Comfort",
+            "Top with Red Bull",
+            "Stir gently"
+          ],
+          "suggestedGlass": "highball",
+          "garnish": "orange slice",
+          "alcoholType": "liqueur",
+          "drinkColour": "#FFC080",
+          "abv": 0.3,
+          "missingIngredients": [],
+          "confidence": 0.7
+        }
+      ]
+    }
+  }
+}

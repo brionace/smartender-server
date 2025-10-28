@@ -3,18 +3,45 @@ import { getCached, setCached } from "../db/cache.js";
 import { getPool, query } from "../db/client.js";
 import fs from "fs/promises";
 import path from "path";
+import { title } from "process";
+import logger from "../utils/logger.js";
 
 export async function identifyImage(req, res) {
   try {
     const ttlMs = Number(process.env.CACHE_TTL_MS || 1000 * 60 * 60 * 24 * 7);
-    const cached = await getCached("identify", req.body, ttlMs);
-    if (cached) return res.json(cached);
+    const debug =
+      req.query.debug === "1" ||
+      req.headers["x-debug"] === "1" ||
+      req.headers["x-debug"] === "true";
 
-    const result = await aiService.identifyIngredients(req.body);
-    await setCached("identify", req.body, result);
+    const cached = await getCached("identify", req.body, ttlMs, { debug });
+    if (debug && cached) {
+      // cached is { data, timings }
+      const payload = cached.data ?? null;
+      const dbg = { cache: cached.timings };
+      res.setHeader("x-debug-info", JSON.stringify(dbg));
+      return res.json({ ...payload, _debug: dbg });
+    }
+    if (!debug && cached) return res.json(cached);
+
+    const aiResp = await aiService.identifyIngredients(req.body, { debug });
+    const result = aiResp && aiResp.data ? aiResp.data : aiResp;
+    const aiLatencyMs =
+      aiResp && aiResp.timings ? aiResp.timings.totalMs : undefined;
+
+    const writeResult = await setCached("identify", req.body, result, {
+      debug,
+    });
+
+    if (debug) {
+      const dbg = { cache: writeResult?.timings ?? null, aiLatencyMs };
+      res.setHeader("x-debug-info", JSON.stringify(dbg));
+      return res.json({ ...result, _debug: dbg });
+    }
+
     res.json(result);
   } catch (error) {
-    console.error("Error in identifyImage:", error);
+    logger.error("Error in identifyImage", { error: error?.message || error });
     res.status(500).json({
       status: "error",
       message: error.message || "Internal server error",
@@ -25,14 +52,36 @@ export async function identifyImage(req, res) {
 export async function getRecipes(req, res) {
   try {
     const ttlMs = Number(process.env.CACHE_TTL_MS || 1000 * 60 * 60 * 24 * 7);
-    const cached = await getCached("recipes", req.body, ttlMs);
-    if (cached) return res.json(cached);
+    const debug =
+      req.query.debug === "1" ||
+      req.headers["x-debug"] === "1" ||
+      req.headers["x-debug"] === "true";
 
-    const result = await aiService.generateRecipes(req.body);
-    await setCached("recipes", req.body, result);
+    const cached = await getCached("recipes", req.body, ttlMs, { debug });
+    if (debug && cached) {
+      const payload = cached.data ?? null;
+      const dbg = { cache: cached.timings };
+      res.setHeader("x-debug-info", JSON.stringify(dbg));
+      return res.json({ ...payload, _debug: dbg });
+    }
+    if (!debug && cached) return res.json(cached);
+
+    const aiResp = await aiService.generateRecipes(req.body, { debug });
+    const result = aiResp && aiResp.data ? aiResp.data : aiResp;
+    const aiLatencyMs =
+      aiResp && aiResp.timings ? aiResp.timings.totalMs : undefined;
+
+    const writeResult = await setCached("recipes", req.body, result, { debug });
+
+    if (debug) {
+      const dbg = { cache: writeResult?.timings ?? null, aiLatencyMs };
+      res.setHeader("x-debug-info", JSON.stringify(dbg));
+      return res.json({ ...result, _debug: dbg });
+    }
+
     res.json(result);
   } catch (error) {
-    console.error("Error in getRecipes:", error);
+    logger.error("Error in getRecipes", { error: error?.message || error });
     res.status(500).json({
       status: "error",
       message: error.message || "Internal server error",
@@ -59,9 +108,9 @@ export async function browseRecipes(req, res) {
           created_at: r.created_at,
         }));
       } catch (e) {
-        console.warn(
-          "browseRecipes DB query failed, falling back to file cache:",
-          e?.message || e
+        logger.warn(
+          "browseRecipes DB query failed, falling back to file cache",
+          { error: e?.message || e }
         );
       }
     }
@@ -80,14 +129,17 @@ export async function browseRecipes(req, res) {
             if (result) items.push({ result, meta: parsed?.meta });
           } catch (e) {
             // ignore
+            logger.warn("Failed to parse file cache entry during browse", {
+              file: f,
+              error: e?.message || e,
+            });
           }
         }
         entries = items;
       } catch (e) {
-        console.warn(
-          "Failed to read file cache for browsing:",
-          e?.message || e
-        );
+        logger.warn("Failed to read file cache for browsing", {
+          error: e?.message || e,
+        });
       }
     }
 
@@ -114,15 +166,15 @@ export async function browseRecipes(req, res) {
       source: pool ? "db-or-file" : "file-only",
       count: aggregated.length,
       recipes: aggregated,
+      title:
+        sort === "recent" ? "Recently Generated Recipes" : "Popular Recipes",
     });
   } catch (error) {
-    console.error("Error in browseRecipes:", error);
-    res
-      .status(500)
-      .json({
-        status: "error",
-        message: error.message || "Internal server error",
-      });
+    logger.error("Error in browseRecipes", { error: error?.message || error });
+    res.status(500).json({
+      status: "error",
+      message: error.message || "Internal server error",
+    });
   }
 }
 

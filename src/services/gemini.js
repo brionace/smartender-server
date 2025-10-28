@@ -1,6 +1,7 @@
 import axios from "axios";
 import { INGREDIENTS_PROMPT, GENERATE_RECIPE_PROMPT } from "./utils/prompts.js";
 import { validateRecipesResponse } from "./utils/validateRecipe.js";
+import logger from "../utils/logger.js";
 
 class AIService {
   constructor() {
@@ -65,6 +66,7 @@ class AIService {
         ],
       };
 
+      const networkStart = Date.now();
       const response = await axios.post(
         `${this.baseUrl}?key=${this.apiKey}`,
         requestBody,
@@ -75,6 +77,7 @@ class AIService {
           timeout: 30000, // 30 second timeout
         }
       );
+      const networkLatencyMs = Date.now() - networkStart;
 
       if (
         !response.data ||
@@ -106,11 +109,21 @@ class AIService {
       // Try to extract JSON from the response
       const jsonMatch =
         text.match(/```json\n?(.*?)\n?```/s) || text.match(/\{.*\}/s);
+      let parseLatencyMs = 0;
       if (jsonMatch) {
         try {
+          const parseStart = Date.now();
           const jsonStr = jsonMatch[1] || jsonMatch[0];
           const parsed = JSON.parse(jsonStr);
-          return parsed;
+          parseLatencyMs = Date.now() - parseStart;
+          return {
+            data: parsed,
+            timings: {
+              networkLatencyMs,
+              parseLatencyMs,
+              totalMs: networkLatencyMs + parseLatencyMs,
+            },
+          };
         } catch (parseError) {
           throw new Error("Failed to parse JSON response");
         }
@@ -118,8 +131,17 @@ class AIService {
 
       // If no JSON found, try to parse the entire response
       try {
+        const parseStart = Date.now();
         const parsed = JSON.parse(text);
-        return parsed;
+        parseLatencyMs = Date.now() - parseStart;
+        return {
+          data: parsed,
+          timings: {
+            networkLatencyMs,
+            parseLatencyMs,
+            totalMs: networkLatencyMs + parseLatencyMs,
+          },
+        };
       } catch (parseError) {
         throw new Error("Response is not valid JSON");
       }
@@ -142,6 +164,7 @@ class AIService {
         throw new Error("Request timeout. Please try again.");
       }
 
+      logger.warn("Gemini API call failed", { error: error?.message || error });
       throw new Error(`Failed to process AI request: ${error.message}`);
     }
   }
@@ -152,14 +175,32 @@ class AIService {
     });
 
     try {
-      const result = await this.callGeminiAPI(prompt, input.photoDataUri);
+      const resp = await this.callGeminiAPI(prompt, input.photoDataUri);
+      const payload = resp && resp.data ? resp.data : resp;
 
-      // Validate the response structure
-      if (!result || !Array.isArray(result.ingredients)) {
+      // Normalize payload similar to deepinfra service
+      let normalized = null;
+      if (payload && Array.isArray(payload.ingredients)) {
+        normalized = {
+          ingredients: payload.ingredients,
+          duplicates: payload.duplicates || [],
+          guesses: payload.guesses || [],
+          uncertain: !!payload.uncertain,
+        };
+      } else if (payload && Array.isArray(payload.newIngredients)) {
+        normalized = {
+          ingredients: payload.newIngredients,
+          duplicates: payload.duplicates || [],
+          guesses: payload.guesses || [],
+          uncertain: !!payload.uncertain,
+        };
+      } else {
         throw new Error("Invalid response format from AI service");
       }
 
-      return result;
+      return resp && resp.timings
+        ? { data: normalized, timings: resp.timings }
+        : normalized;
     } catch (error) {
       console.error("Error identifying ingredients:", error);
       throw new Error(`Failed to identify ingredients: ${error.message}`);
@@ -174,7 +215,8 @@ class AIService {
     // });
 
     try {
-      const result = await this.callGeminiAPI(input.prompt);
+      const resp = await this.callGeminiAPI(input.prompt);
+      const result = resp && resp.data ? resp.data : resp;
 
       // Validate the response structure
       if (!result || !Array.isArray(result.recipes)) {
@@ -194,7 +236,9 @@ class AIService {
         existingRecipes: input?.recipes || [],
       });
 
-      return result;
+      return resp && resp.timings
+        ? { data: result, timings: resp.timings }
+        : result;
     } catch (error) {
       console.error("Error generating recipes:", error);
       throw new Error(`Failed to generate recipes: ${error.message}`);

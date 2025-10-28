@@ -39,17 +39,22 @@ Task:
 
 IMPORTANT: Respond with ONLY valid JSON and nothing else.
 
-Return this exact JSON structure:
+Return this exact JSON structure (use these exact property names):
 {
-  "newIngredients": ["ingredientA", "ingredientB"],   // items detected AND NOT in the current list
-  "duplicates": ["ingredientX"],                      // items seen in the photo that are already in current list
-  "guesses": ["possible1"],                           // optional when uncertain
+  "ingredients": ["ingredientA", "ingredientB"],   // items detected (only those visible in the photo)
+  "duplicates": ["ingredientX"],                    // items seen in the photo that are already in current list
+  "guesses": ["possible1"],                         // optional when uncertain
   "uncertain": false                                  // or true when there are guesses
 }
 
-Example:
+Notes:
+- The top-level field MUST be named "ingredients" (an array of strings). Do not return "newIngredients".
+- Only include ingredients you can see. Do not invent ingredients.
+- If nothing is detected, return { "ingredients": [], "duplicates": [], "guesses": [], "uncertain": false }.
+
+Example valid response:
 {
-  "newIngredients": ["vodka", "mint"],
+  "ingredients": ["vodka", "mint"],
   "duplicates": ["lime"],
   "guesses": [],
   "uncertain": false
@@ -83,7 +88,7 @@ Rules (strict):
 - Order recipes so those with empty "missingIngredients" come first.
 - Exclude any recipes that appear on this list ${JSON.stringify(
     input?.recipes || []
-  )}. Match by the recipe object's "name" property.
+  )}. Match by the recipe object's "ingredients" property.
 - Use ${measurementType} units.
 - Prefer concise recipes (max ${maxRecipes}).
 
@@ -134,6 +139,7 @@ export const GENERATE_RECIPE_PROMPT_SIMPLE = (input) => {
         .map((s) => s.trim())
         .filter(Boolean);
   const maxRecipes = ingredientsList.length <= 2 ? 1 : 5;
+  // remove accidental console logging in production
 
   return `You are a professional mixologist. Given these available ingredients: ${
     input.ingredients
@@ -147,7 +153,7 @@ Rules (strict):
 - Use ${measurementType} units.
 - Exclude any recipes that appear on this list ${JSON.stringify(
     input?.recipes || []
-  )}. Match by the recipe object's "name" property.
+  )}. Match by the recipe object's "ingredients" property.
 
 For each recipe include these exact fields:
 - name

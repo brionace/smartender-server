@@ -1,7 +1,8 @@
 import crypto from "crypto";
 import fs from "fs/promises";
 import path from "path";
-import { getPool, query } from "./client.js";
+import { getPool, query, timedQuery } from "./client.js";
+import logger from "../utils/logger.js";
 
 let ensurePromise = null;
 
@@ -33,7 +34,11 @@ async function ensureTable() {
     ensurePromise = Promise.resolve();
     return ensurePromise;
   }
-  ensurePromise = query(`
+
+  // Run table creation with a short timeout so startup doesn't hang if PG is
+  // unreachable. The cache layer will fall back to file cache on failures.
+  ensurePromise = timedQuery(
+    `
     CREATE TABLE IF NOT EXISTS ai_cache (
       id BIGSERIAL PRIMARY KEY,
       endpoint TEXT NOT NULL,
@@ -47,13 +52,19 @@ async function ensureTable() {
     );
     CREATE UNIQUE INDEX IF NOT EXISTS idx_ai_cache_endpoint_hash ON ai_cache (endpoint, body_hash);
     CREATE INDEX IF NOT EXISTS idx_ai_cache_created_at ON ai_cache (created_at);
-  `)
+  `,
+    [],
+    Number(process.env.PG_QUERY_TIMEOUT_MS) || 2000
+  )
     .then(() => undefined)
     .catch((e) => {
-      console.warn("ai_cache table creation failed:", e?.message || e);
+      logger.warn("ai_cache table creation failed", { error: e?.message || e });
     });
   return ensurePromise;
 }
+
+// Export ensureTable so it can be invoked at app startup (background migration)
+export { ensureTable };
 
 // File-system fallback cache directory
 const ROOT = path.resolve(process.cwd());
@@ -80,6 +91,7 @@ async function readFileCache(namespace, key, ttlMs) {
     }
     return parsed.data ?? null;
   } catch (e) {
+    logger.warn("File cache read failed", { error: e?.message || e });
     return null;
   }
 }
@@ -94,85 +106,144 @@ async function writeFileCache(namespace, key, body, result) {
     };
     await fs.writeFile(file, JSON.stringify(payload, null, 2), "utf8");
   } catch (e) {
-    console.warn("File cache write failed:", e?.message || e);
+    logger.warn("File cache write failed", { error: e?.message || e });
   }
 }
 
-export async function getCached(endpoint, body, ttlMs) {
+export async function getCached(endpoint, body, ttlMs, opts = {}) {
   const pool = getPool();
-  if (!pool) return null;
+  const debug = !!opts.debug;
+  const timings = { cacheLatencyMs: null, cacheSource: null };
+  if (!pool) {
+    // Try file fallback immediately
+    const start = Date.now();
+    const fileResult = await readFileCache(
+      endpoint,
+      hashKey(endpoint, body),
+      ttlMs
+    );
+    timings.cacheLatencyMs = Date.now() - start;
+    timings.cacheSource = "file";
+    if (debug) return { data: fileResult?.result ?? fileResult, timings };
+    return fileResult?.result ?? fileResult ?? null;
+  }
   try {
     await ensureTable();
+    const start = Date.now();
     const bodyHash = hashKey(endpoint, body);
-    const { rows } = await query(
+    const { rows } = await timedQuery(
       "SELECT result, created_at FROM ai_cache WHERE endpoint=$1 AND body_hash=$2 LIMIT 1",
-      [endpoint, bodyHash]
+      [endpoint, bodyHash],
+      Number(process.env.PG_QUERY_TIMEOUT_MS) || 2000
     );
-    if (!rows || rows.length === 0) return null;
+    timings.cacheLatencyMs = Date.now() - start;
+    timings.cacheSource = "db";
+    if (!rows || rows.length === 0) {
+      // no DB hit; try file fallback
+      const fstart = Date.now();
+      const fileResult = await readFileCache(endpoint, bodyHash, ttlMs);
+      if (fileResult) {
+        timings.cacheLatencyMs += Date.now() - fstart;
+        timings.cacheSource = "file";
+        if (debug) return { data: fileResult?.result ?? fileResult, timings };
+        return fileResult?.result ?? fileResult ?? null;
+      }
+      if (debug) return { data: null, timings };
+      return null;
+    }
     if (ttlMs) {
       const age = Date.now() - new Date(rows[0].created_at).getTime();
-      if (age > ttlMs) return null;
+      if (age > ttlMs) {
+        if (debug) return { data: null, timings };
+        return null;
+      }
     }
     // update access stats but ignore errors
     try {
-      await query(
+      await timedQuery(
         "UPDATE ai_cache SET hits=hits+1, last_accessed=NOW() WHERE endpoint=$1 AND body_hash=$2",
-        [endpoint, bodyHash]
+        [endpoint, bodyHash],
+        Number(process.env.PG_QUERY_TIMEOUT_MS) || 500
       );
     } catch (e) {
-      console.warn("Failed to update cache stats:", e?.message || e);
+      logger.warn("Failed to update cache stats", { error: e?.message || e });
     }
+    if (debug) return { data: rows[0].result, timings };
     return rows[0].result;
   } catch (err) {
     // Non-fatal: log and continue without cache
-    console.warn(
-      "Cache read failed (falling back to live AI):",
-      err?.code || err?.message || err
-    );
+    logger.warn("Cache read failed (falling back to live AI)", {
+      error: err?.code || err?.message || err,
+    });
     // Try file fallback
     try {
       const bodyHash = hashKey(endpoint, body);
       const fileResult = await readFileCache(endpoint, bodyHash, ttlMs);
       if (fileResult) return fileResult.result ?? fileResult;
     } catch (e) {
-      // ignore
+      logger.warn("File cache fallback read failed", {
+        error: e?.message || e,
+      });
     }
     return null;
   }
 }
 
-export async function setCached(endpoint, body, result) {
+export async function setCached(endpoint, body, result, opts = {}) {
+  const debug = !!opts.debug;
+  const timings = { writeLatencyMs: null, writeTarget: null };
   const pool = getPool();
-  if (!pool) return;
+  if (!pool) {
+    // write to file fallback
+    const bodyHash = hashKey(endpoint, body);
+    const start = Date.now();
+    await writeFileCache(endpoint, bodyHash, body, result).catch(() => {});
+    timings.writeLatencyMs = Date.now() - start;
+    timings.writeTarget = "file";
+    if (debug) return { success: true, timings };
+    return;
+  }
   try {
     await ensureTable();
     const bodyHash = hashKey(endpoint, body);
-    await query(
+    const start = Date.now();
+    await timedQuery(
       `INSERT INTO ai_cache (endpoint, body_hash, body, result, hits)
        VALUES ($1,$2,$3,$4,1)
        ON CONFLICT (endpoint, body_hash)
        DO UPDATE SET result=EXCLUDED.result, body=EXCLUDED.body, hits=ai_cache.hits+1, last_accessed=NOW()`,
-      [endpoint, bodyHash, body, result]
+      [endpoint, bodyHash, body, result],
+      Number(process.env.PG_QUERY_TIMEOUT_MS) || 2000
     );
+    timings.writeLatencyMs = Date.now() - start;
+    timings.writeTarget = "db";
     // also ensure file fallback is updated
     try {
       await writeFileCache(endpoint, bodyHash, body, result);
     } catch (e) {
       // ignore
     }
+    if (debug) return { success: true, timings };
+    return;
   } catch (err) {
     // Non-fatal: log and continue
-    console.warn(
-      "Cache write failed (ignored):",
-      err?.code || err?.message || err
-    );
+    logger.warn("Cache write failed (ignored)", {
+      error: err?.code || err?.message || err,
+    });
     // fallback: write to file cache so we still persist locally
     try {
       const bodyHash = hashKey(endpoint, body);
+      const start = Date.now();
       await writeFileCache(endpoint, bodyHash, body, result);
+      timings.writeLatencyMs = Date.now() - start;
+      timings.writeTarget = "file";
     } catch (e) {
-      // ignore
+      logger.warn("File cache write failed during fallback", {
+        error: e?.message || e,
+      });
     }
+    if (debug) return { success: false, timings };
+    return;
   }
 }
 
